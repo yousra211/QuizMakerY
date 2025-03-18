@@ -1,0 +1,15 @@
+.modalHeader{
+    float: right;
+  }
+  .title{
+    font-size: large;
+    font-weight: bolder;
+    margin-left: 10px;
+  }
+  .modalFooter button{
+    float: right;
+    margin: 4px;
+  }
+  .modalBody{
+    margin-left: 10px;
+  }

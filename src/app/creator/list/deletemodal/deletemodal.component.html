@@ -1,0 +1,14 @@
+<p>deletemodal works!</p>
+<div class="deleteModal">
+    <div class="modalHeader">
+      <button type="button" class="btn btn-danger" >X</button>
+    </div>
+    <div class="modalBody">
+     <div class="title">Supprimer</div>
+    <p>Voulez vous vraiment supprimer {{creatorData.fullname}}</p>
+    </div>
+    <div class="modalFooter">
+      <button type="button" class="btn btn-danger" (click)="activeModal.close('oui')">Oui</button>
+      <button type="button" class="btn btn-secondary" (click)="activeModal.close('non')">Non</button>
+    </div>
+    </div>

@@ -1,0 +1,23 @@
+button{
+	float:right;
+}
+form{
+	padding:10%;
+	margin-left: 10%;
+	width: 80%;
+}
+input{
+	margin-top: 5%;
+	margin-bottom: 5%;
+}
+input{
+	margin-top: 5%;
+	margin-bottom: 5%;
+}
+h2{
+	text-align:center;
+	margin-top: 10%;
+}
+#fermer{
+	float:right;
+}

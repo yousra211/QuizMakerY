@@ -1,0 +1,29 @@
+
+<button id="fermer " (click)="fermer()" type ="button" class="btn btn-danger">X</button>
+<form [formGroup]="formCreator" (ngSubmit)="actionCreator()">
+	<h2>{{action}} un creator</h2>
+	<div class="col">
+	  <div class="col">
+		<input formControlName="id" type="text" class="form-control" placeholder="id">
+	  </div>
+	  <div class="col">
+		<input formControlName="fullname" type="text" class="form-control" placeholder="fullname">
+	  </div>
+	  <div class="col">
+		<input formControlName="username" type="text" class="form-control" placeholder="username">
+	  </div>
+	  <div class="col">
+		<input formControlName="email" type="text" class="form-control" placeholder="email">
+	  </div>
+	  <div class="col">
+		<input formControlName="password" type="text" class="form-control" placeholder="password">
+	  </div>
+	  <div class="col">
+		<input type="file" (change)="fileSelected($event)" class="form-control" >
+	  </div>
+	  <div class="col">
+		<button (click)="ajouterCreator()" type ="button" class="btn btn-primary" [disabled]="!formCreator.valid">{{action}}</button>
+	  </div>
+	  
+	</div>
+  </form>

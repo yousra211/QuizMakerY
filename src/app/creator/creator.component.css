@@ -1,0 +1,22 @@
+#searchByName{
+    width: 20%;
+	flex: 1;
+	margin-right: 40rem;
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-radius: 0.25rem;
+	
+}
+#openModal{
+    float: right;
+	padding: 0.5rem 1rem;
+	background-color: #0078f8;
+	color: #fff;
+	border: none;
+	border-radius: 0.25rem;
+	cursor: pointer;
+}
+.search-and-add {
+	display: flex;
+	align-items: center;
+  }
