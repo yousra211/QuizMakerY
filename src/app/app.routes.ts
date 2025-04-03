@@ -9,19 +9,20 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { MakequizComponent } from './makequiz/makequiz.component';
+import { NavbarComponent } from './navbar/navbar.component';
 export const routes: Routes = [
-    {path: "creator",component:CreatorComponent},
-    {path: "exam",component:ExamComponent},
-    { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '', component: HomeComponent },
+
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent }, 
   { path: 'makequiz', component: MakequizComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent }
-
+  { path: 'signup', component: SignupComponent },
+  {path: "creator",component:CreatorComponent},
+  {path: "exam",component:ExamComponent},
+  {path: "navbar",component:NavbarComponent},
 ];
 @NgModule({
-   
+ 
     imports: [BrowserModule,
         ReactiveFormsModule,RouterModule.forRoot(routes)],
     exports: [RouterModule]

@@ -1,26 +1,32 @@
+
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgFor } from '@angular/common'
-import { NgIf } from '@angular/common'
-import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { NgFor } from '@angular/common';
+import { NgIf } from '@angular/common';
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [NgFor,NgIf,ReactiveFormsModule],
+  imports: [NgFor, NgIf, ReactiveFormsModule,RouterLink],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
 export class SignupComponent {
-  signupForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  signupForm: FormGroup;
+  signupMessage: string = '';
+
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.signupForm = this.fb.group({
-      name: ['', Validators.required],
+      fullname: ['', Validators.required], 
+      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required]],
       confirmPassword: ['', Validators.required]
-    }, { validator: this.passwordMatchValidator });
+    });
   }
 
   passwordMatchValidator(g: FormGroup) {
@@ -29,9 +35,22 @@ export class SignupComponent {
   }
 
   onSubmit() {
-    if (this.signupForm.valid) {
-      // Handle signup logic here
-      console.log('Signup form submitted', this.signupForm.value);
+    console.log("ok")
+      const formData = new FormData();
+      formData.append('fullname', this.signupForm.get('fullname')?.value); 
+      formData.append('username', this.signupForm.get('username')?.value);
+      formData.append('email', this.signupForm.get('email')?.value);
+      formData.append('password', this.signupForm.get('password')?.value);
+
+      this.http.post('http://localhost:8080/api/auth/signup', formData, { responseType: 'text' })
+        .subscribe({
+          next: (response) => {
+            this.signupMessage = 'Signup successful!';
+            this.signupForm.reset();
+          },
+          error: (error) => {
+            this.signupMessage = error.error || 'Signup failed. Try again.';
+          }
+        });
     }
   }
-}

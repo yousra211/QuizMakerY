@@ -1,241 +1,73 @@
-/* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-  }
+
+.landing-content {
+  background-color: rgba(187, 222, 240, 0.38);
+  padding: 30px 20px;
+  text-align: left; /* Align text to the left */
+  border-radius: 17px;
+  margin-top: 60px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 0; /* Align the div to the left */
+  max-width: 600px; /* Optional: Set a max width for better alignment */
+  margin-bottom:60px;
+  padding-left: 20px;
+}
+
+
+
+.description {
+  max-width: 300px;
+  margin: 0 auto;
+
+}
+
+.description p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  text-align: left; 
+}
+
+.cta-section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 42px;
+  border: 1.2px solid #333;
+  border-radius: 17px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: rgba(255, 255, 255, 0.5);
+ 
+}
+.cta-section p{
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  transition: transform 0.3s;
+ padding-left: 15px;
+  padding-right: 15px;
+}
+.create-quiz {
+  background-color: rgba(55, 74, 84, 0.59);
+  color: #202B31;
+  border: none;
+  border-radius: 17px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
   
-  /* Header Styles */
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-    background-color:#FDF6F3;
-  }
-  
-  .logo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo img {
-    height: 60px;
-    margin-right: 15px;
-  }
-  
-  .logo-text {
-    font-size: 28px;
-    color: #d29985;
-    font-family: 'Georgia', serif;
-  }
-  
-  .auth-buttons {
-    display: flex;
-    gap: 15px;
-  }
-  
-  .btn {
-    padding: 10px 25px;
-    border-radius: 25px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
-  }
-  
-  .btn-login, .btn-signup {
-    background-color: #d29985;
-    color: white;
-  }
-  
-  .btn:hover {
-    opacity: 0.9;
-    transform: scale(1.05);
-  }
-  
-  /* Navigation Bar */
-  .nav-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 50px;
-    background-color: #faebd7;
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: 25px;
-  }
-  
-  .nav-links a {
-    color: #a67c52;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    transition: color 0.3s;
-  }
-  
-  .nav-links a:hover, .nav-links a.active {
-    color: #d29985;
-  }
-  
-  .profile-icons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .profile-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-    border: 2px solid #d29985;
-  }
-  
-  /*
-  .profile-icon.female {
-    background-image: url('assets/female-profile.png');
-  }
-  
-  .profile-icon.male {
-    background-image: url('assets/male-profile.png');
-  }
-  
-  /* Hero Section */
-  .content {
-    padding: 30px 50px;
-    background-color:#FDF6F3;
-  }
-  
-  .hero-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 40px;
-    background-color:#FDF6F3;
-  }
-  
-  .text-content {
-    flex: 1;
-  }
-  
-  .hero-text {
-    color: #4a90e2;
-    font-size: 20px;
-    line-height: 1.5;
-  }
-  
-  .image-content {
-    flex: 1.5;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .hero-image {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  /* Responsive Adjustments */
-  @media (max-width: 768px) {
-    .header, .nav-bar {
-      padding: 15px 20px;
-    }
-    
-    .hero-section {
-      flex-direction: column;
-    }
-    
-    .logo-text {
-      font-size: 22px;
-    }
-    
-    .btn {
-      padding: 8px 15px;
-      font-size: 14px;
-    }
-    
-    .nav-links {
-      gap: 15px;
-    }
-    
-    .nav-links a {
-      font-size: 16px;
-    }
-  }
-  
-  /* Hero Section Styles 
-  .hero {
-    background-color:#FDF6F3;
-    display: flex;
-    align-items: left;
-    width: 100%;
-    margin: auto;
-   
-    justify-content: flex-start;
-  }
-  
-  
-  
-  .hero p {
-     font-size: 1.2rem;
-    
-    margin-top: 10%;
-    color: #3B97D3;
-   text-align: left;
-    flex: 1;
-    margin-left: 30px;
-    margin-right: 30px;
-  }
-  
-  .hero img{
-    margin-top: 5%;
-  height: 30%;
-  width: 50%;
-  margin-right: 15px;
-  }
-  
-  
-  #logo {
-    background-color: #FDF6F3;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-top: 0;
-    padding-top: 0;
-    width: 100%;
-    
-  }
-  
-  #logo img{
-   
-  width: 70px;
-  margin-right: 15px;
-  
-  margin-top: 0;
-  padding-top: 0;
-  }
-  #logo h1{
-    font-family:'Times New Roman';
-     font-size: 1.2rem;
-     color: #3B97D3;
-     
-     text-align: left;
-     margin: 0;
-     padding-top: 0;
-   }
-     */
-  
-  
-  /* Footer Styles */
-  footer {
-    background-color: #FEEAD2;
-    color:  #C4826B;
-    padding: 1rem;
-    text-align: center;
-  
-  }
+}
+
+.create-quiz:hover {
+  background-color: #202B31;
+  color: white;
+}
+
+footer {
+  text-align: center;
+  padding: 20px 0;
+  color: #202B31;
+  background-color:rgba(255, 255, 255, 0.8);
+
+}

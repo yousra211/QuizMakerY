@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NgFor } from '@angular/common'
-import { NgIf } from '@angular/common'
-import { ReactiveFormsModule } from '@angular/forms';
+import { RouterOutlet,Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet,NgFor,NgIf],
+  imports: [],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
 
@@ -25,6 +22,23 @@ export class HomeComponent {
     
     selectItem(item: any): void {
       this.selectedItem = item;
+    }
+
+    constructor(private router: Router){
+    
+    }
+    goToLogin(login:string):void{
+      this.router.navigate([`${login}`]);
+    
+    }
+    
+    goToSignup(signup:string):void{
+      this.router.navigate([`${signup}`]);
+    
+    }
+    createQuiz() {
+     
+      console.log('Create quiz clicked');
     }
 }
 

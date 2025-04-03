@@ -1,14 +1,16 @@
-img{
-    width : 30px;
-    height:  30px;
-    float : right ;
+img {
+    width: 30px;
+    height: 30px;
+    float: right;
     opacity: 0.2;
 }
-img:hover{
+
+img:hover {
     opacity: 1;
     cursor: pointer;
 }
-#search{
+
+#search {
     width: 70%;
     float: right;
     font-size: 11px;

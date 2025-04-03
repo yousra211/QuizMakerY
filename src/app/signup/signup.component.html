@@ -1,10 +1,11 @@
+
 <div class="form-container">
     <h2 class="form-title">Create Your Account</h2>
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="signupForm " >
       <div class="form-group">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" formControlName="name">
-        <div *ngIf="signupForm.get('name')?.invalid && signupForm.get('name')?.touched" class="error-message">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" formControlName="fullname">
+        <div *ngIf="signupForm.get('fullname')?.invalid && signupForm.get('fullname')?.touched" class="error-message">
           Name is required
         </div>
       </div>
@@ -32,7 +33,7 @@
           <span *ngIf="signupForm.errors?.['mismatch']">Passwords do not match</span>
         </div>
       </div>
-      <button type="submit" class="submit-btn" [disabled]="signupForm.invalid">Sign Up</button>
+      <button type="submit" class="submit-btn"  (click)="onSubmit()" type="button">Sign Up</button>
       <div class="form-footer">
         <p>Already have an account? <a routerLink="/login">Log in</a></p>
       </div>
