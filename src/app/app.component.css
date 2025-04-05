@@ -1,2 +1,37 @@
-
-
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    background-color: #E7F4FB;
+    
+    .background-blur {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('../assets/mbg.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: blur(8px);
+      z-index: -1;
+    }
+    
+    /* Optional overlay to lighten the blur */
+    .background-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(231, 244, 251, 0.6);
+      z-index: -1;
+    }
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 2rem 0;
+    position: relative;
+  }

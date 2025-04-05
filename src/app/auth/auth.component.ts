@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
+
   private backEndURL = 'http://localhost:8080/api/auth/signup';
   // Signal pour stocker les creators
   creators = signal<any[]>([]);

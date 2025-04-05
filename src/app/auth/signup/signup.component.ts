@@ -6,20 +6,26 @@ import { NgFor } from '@angular/common';
 import { NgIf } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-
+import { NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-signup',
   standalone: true,
   imports: [NgFor, NgIf, ReactiveFormsModule,RouterLink],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css'
+  styleUrl: './signup.component.css',
+  providers: [NgbActiveModal]
 })
 export class SignupComponent {
 
   signupForm: FormGroup;
   signupMessage: string = '';
+  signupData:any;
+  action:string="sign up"
+  
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, 
+      private http: HttpClient ,
+      private activeModal: NgbActiveModal) {
     this.signupForm = this.fb.group({
       fullname: ['', Validators.required], 
       username: ['', Validators.required],
@@ -53,4 +59,14 @@ export class SignupComponent {
           }
         });
     }
-  }
+
+    fermer() {
+      this.activeModal.close();
+    }
+    
+  
+    ngOnInit(){
+      if(this.action=="Modifier")
+      this.signupForm.setValue(this.signupData)
+    }
+  } 

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet,Router } from '@angular/router';
+import { MakequizComponent } from '../makequiz/makequiz.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [MakequizComponent, RouterOutlet],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -19,26 +20,22 @@ export class HomeComponent {
     ];
     
     selectedItem: any = null;
-    
-    selectItem(item: any): void {
-      this.selectedItem = item;
-    }
-
-    constructor(private router: Router){
-    
-    }
-    goToLogin(login:string):void{
-      this.router.navigate([`${login}`]);
-    
-    }
-    
-    goToSignup(signup:string):void{
-      this.router.navigate([`${signup}`]);
-    
-    }
-    createQuiz() {
-     
-      console.log('Create quiz clicked');
-    }
+  
+  constructor(private router: Router) {}
+  
+  selectItem(item: any): void {
+    this.selectedItem = item;
+  }
+  
+  createQuiz(): void {
+    this.router.navigate(['/makequiz']);
+  }
+  
+  goToLogin(): void {
+    this.router.navigate(['/login']);
+  }
+  
+  goToSignup(): void {
+    this.router.navigate(['/signup']);
+  }
 }
-

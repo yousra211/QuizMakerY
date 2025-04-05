@@ -1,4 +1,4 @@
-<div class="container">
+
   <nav class="navbar">
     <div class="logo">
       <img src="assets/QUIZYM.png" alt="Quizym Logo" />
@@ -9,10 +9,9 @@
         <li><a routerLink="/makequiz">makequiz</a></li>
       </ul>
       <div class="auth-buttons">
-        <button class="log-in" routerLink="/login">log in</button>
-        <button class="sign-up" routerLink="/signup">sign up</button>
+        
+        <button (click)="openLoginModal()" id="log-in" type ="button" class="btn btn-primary">Log in</button>
+        <button (click)="openSignupModal()" id="sign-up" type ="button" class="btn btn-primary">Sign up</button>
       </div>
     </div>
   </nav>
-</div>
-  
