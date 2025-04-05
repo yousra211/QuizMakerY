@@ -21,7 +21,7 @@ export class SignupComponent {
   signupMessage: string = '';
   signupData:any;
   action:string="sign up"
-  
+
 
   constructor(private fb: FormBuilder, 
       private http: HttpClient ,
