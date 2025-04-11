@@ -1,0 +1,18 @@
+<div class="modal-header">
+	<h4 class="modal-title" id="modal-title">Supprimer creator </h4>
+<button
+	type="button"
+	class="btn-close"
+	aria-describedby="modal-title"
+	(click)="modal.close('fermer')"
+></button>
+</div>
+<div class="modal-body">
+	<p>
+		<strong>Etes vous sur de vouloir supprimer le creator <span class="text-primary">{{creatorData.fullname}}</span></strong>
+	</p>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-outline-secondary" (click)="modal.close('cancel')"> Annuler</button>
+	<button type="button" class="btn btn-outline-danger" (click)="modal.close('ok')">Valider</button>
+</div>

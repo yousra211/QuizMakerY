@@ -1,0 +1,73 @@
+
+.landing-content {
+  background-color: rgba(187, 222, 240, 0.38);
+  padding: 30px 20px;
+  text-align: left; /* Align text to the left */
+  border-radius: 17px;
+  margin-top: 60px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 0; /* Align the div to the left */
+  max-width: 600px; /* Optional: Set a max width for better alignment */
+  margin-bottom:60px;
+  padding-left: 20px;
+}
+
+
+
+.description {
+  max-width: 300px;
+  margin: 0 auto;
+
+}
+
+.description p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  text-align: left; 
+}
+
+.cta-section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 42px;
+  border: 1.2px solid #333;
+  border-radius: 17px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: rgba(255, 255, 255, 0.5);
+ 
+}
+.cta-section p{
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  transition: transform 0.3s;
+ padding-left: 15px;
+  padding-right: 15px;
+}
+.create-quiz {
+  background-color: rgba(55, 74, 84, 0.59);
+  color: #202B31;
+  border: none;
+  border-radius: 17px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  
+}
+
+.create-quiz:hover {
+  background-color: #202B31;
+  color: white;
+}
+
+footer {
+  text-align: center;
+  padding: 20px 0;
+  color: #202B31;
+  background-color:rgba(255, 255, 255, 0.8);
+
+}

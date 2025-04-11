@@ -1,0 +1,158 @@
+.create-quiz-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color:rgba(187, 222, 240, 0.38);
+    border-radius: 17px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-top:60px ;
+    margin-bottom: 60px;  
+}
+  .form-group {
+    margin-bottom: 15px;
+
+  }
+  label {
+    display: #62230e;
+    margin-bottom: 5px;
+    font-weight: bold;
+   
+  }
+  input, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 17px;
+
+  }
+  .required {
+    color: red;
+    margin-left: 4px;
+  }
+  .error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+  }
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .create-quiz-btn {
+    background-color:  rgba(55, 74, 84, 0.59);
+    color: white;
+  }
+  .create-quiz-btn:hover {
+   
+        background-color:#202B31 ;
+    }
+  .cancel-quiz-btn {
+    background-color: rgba(128, 128, 128, 0.132);
+    
+    border-radius: 4px;
+    cursor: pointer;
+ 
+    justify-content: center;
+   margin-left:  10px;;
+  }
+  .cancel-quiz-btn:hover {
+    background-color: rgba(128, 128, 128, 0.374);
+  
+  }
+  .indicator {
+    display: flex;
+    margin-bottom: 15px;
+    font-family: Muli, sans-serif;
+  }
+  .indicator span {
+    margin-left: 5px;
+  }
+
+  /* quizym.component.css */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+
+background-color: #E7F4FB;
+}
+
+.navbar {
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  background-color:rgba(255, 255, 255, 0.8);
+}
+
+.logo {
+  font-size: 12px;
+  
+  color: #333;
+}
+.logo img {
+  width: 200px;
+  height: auto;
+  padding-left: 20px;
+}
+
+
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #202B31;
+  text-transform: lowercase;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+  background-color: #BBDEF0;
+  border-radius: 17px;
+}
+
+.log-in, .sign-up {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  text-transform: lowercase;
+  border-radius: 17px;
+}
+
+.log-in {
+  background-color: transparent;
+  color: #202B31;
+}
+
+.sign-up {
+  background-color: tra;
+  color: white;
+}
+
+
+footer {
+  text-align: center;
+  padding: 20px 0;
+  color: #202B31;
+  background-color:rgba(255, 255, 255, 0.8);
+
+}

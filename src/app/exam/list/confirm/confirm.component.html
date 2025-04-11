@@ -1,0 +1,20 @@
+<p>confirm works!</p>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Supprimer exam</h4>
+<button 
+       type="button" 
+       class="btn-close" 
+       aria-describedby="modal-title"
+       (click)="modal.close('fermer')"></button>
+    </div>
+    <div class="modal-body">
+        <p>
+            <strong>Etre vous sur de vouloir supprimer exam <span class="text-primay">{{title}}</span></strong>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary"
+        (click)="modal.close('cancel')">Annuler</button>
+    <button type="button" class="btn btn-danger"
+    (click)="modal.close('ok')"> Valider</button>
+    </div> 

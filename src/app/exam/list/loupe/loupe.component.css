@@ -1,0 +1,17 @@
+img {
+    width: 30px;
+    height: 30px;
+    float: right;
+    opacity: 0.2;
+}
+
+img:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+#search {
+    width: 70%;
+    float: right;
+    font-size: 11px;
+}
