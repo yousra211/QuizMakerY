@@ -27,12 +27,12 @@ getCreators():void{
 	//this.creator.push(creator)
 	const formData=new FormData()
 	formData.append('id',creator.get('id')?.value)
-	formData.append('fullName',creator.get('fullname')?.value)
-	formData.append('userName',creator.get('username')?.value)
+	formData.append('fullname',creator.get('fullname')?.value)
+	formData.append('username',creator.get('username')?.value)
 	formData.append('email',creator.get('email')?.value)
 	formData.append('password',creator.get('password')?.value)
 	formData.append('file',photo)
-
+ 
 	this.http.post<Creator>(this.backEndURL,formData).subscribe(newCreator=>{
 		this.creators.update(state=>[...state,newCreator])
 	})

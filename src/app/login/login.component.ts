@@ -16,7 +16,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-
+  action:string="Log in"
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -26,11 +26,18 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.http.post('http://localhost:8080/auth/login', this.loginForm.value, { responseType: 'text' })
-        .subscribe(
-          response => alert(response),
-          error => alert('Login failed')
-        );}
-  }
+        this.http.post('http://localhost:8080/auth/login', 
+            this.loginForm.value, 
+            { responseType: 'text' }
+        ).subscribe({
+            next: (response) => {
+                alert(response);
+            },
+            error: (err) => {
+                alert(`Login failed: ${err.error}`);
+            }
+        });
+    }
+}
 
 }

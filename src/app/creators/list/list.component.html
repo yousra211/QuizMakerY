@@ -18,8 +18,14 @@
 		<td>{{creator.email}}</td>
 		<td>{{creator.password}}</td>
 		<td><img src="{{creator.photo}}" class="photo"></td>
-		<td> <img class="delete" src="/assets/images/deleteIcon.png" (click)="openDeleteModal(creator)"> </td>
-		<td> <img class="delete" src="assets/images/updateIcon.png" (click)="updateCreator(creator)" > </td> 
+		<td>
+			<button class="btn-delete" (click)="openDeleteModal(creator)">Supprimer</button>
+		  </td>
+		  
+		  <td>
+			<button class="btn-update" (click)="updateCreator(creator)">Modifier</button>
+		  </td>
+		  
 	</tr>
 	}
 	</tbody>

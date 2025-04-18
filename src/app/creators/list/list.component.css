@@ -11,3 +11,28 @@ button{
     width: 24px;
     cursor: pointer;
   }
+
+  .btn-update {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn-update:hover {
+    background-color: #2980b9;
+  }
+
+  .btn-delete {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn-delete:hover {
+    background-color: #c0392b;
+  }
+  

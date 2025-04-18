@@ -11,9 +11,11 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [NgIf , NgbModalModule],
   templateUrl: './makequiz.component.html',
-  styleUrl: './makequiz.component.css'
+  styleUrl: './makequiz.component.css',
+  providers: [NgbActiveModal] 
 })
 export class MakequizComponent {
+  backEndURL="http://localhost:8080/exams"
   makequizForm: FormGroup;
   constructor(private fb: FormBuilder ,private router: Router,public activeModal: NgbActiveModal) {
     this.makequizForm = this.fb.group({
