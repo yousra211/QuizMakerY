@@ -31,7 +31,7 @@ export class SignupComponent {
       confirmPassword: ['', Validators.required]
     }, { validator: this.passwordMatchValidator });
   }
-
+  
   passwordMatchValidator(g: FormGroup) {
     return g.get('password')?.value === g.get('confirmPassword')?.value
       ? null : { 'mismatch': true };
@@ -40,7 +40,6 @@ export class SignupComponent {
     if ( this.signupForm.valid ) {
 
       const newcreatorData = {
-        
         fullname: this.signupForm.value.fullname,
         email: this.signupForm.value.email,
         password: this.signupForm.value.password,
