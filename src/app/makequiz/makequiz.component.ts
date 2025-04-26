@@ -6,6 +6,7 @@ import { NgbActiveModal, NgbModal, NgbModalModule } from '@ng-bootstrap/ng-boots
 import { QuestionComponent } from '../question/question.component';
 import { Router } from '@angular/router';
 import { MakequizService } from './makequiz.service';
+import { exam } from './makequiz.model';
 
 @Component({
   selector: 'app-makequiz',
@@ -31,24 +32,37 @@ export class MakequizComponent {
 
   onSubmit() {
     if (this.makequizForm.valid) {
-      
-      const examData= {
+      const examData: exam = {
         title: this.makequizForm.value.title,
         duration: this.makequizForm.value.duration,
         description: this.makequizForm.value.description,
         uniqueLink: this.makequizForm.value.uniqueLink,
       };
-      this.makequizService.addExam(examData);
-      this.router.navigate(['/question']);
-    }
-    else {
-      console.error("Formulaire invalide ");
+  
+      const creatorId = localStorage.getItem('creatorId');
+      console.log("creatorId dans localStorage:", creatorId);
+      if (creatorId) {
+        console.log("Contenu examData à envoyer:", examData);
+
+        this.makequizService.addExamForCreator(+creatorId, examData).subscribe({
+          next: (nouveauExam) => {
+            // Facultatif : mettre à jour un signal local si tu veux
+            // this.makequizService.newexams.update(state => [...state, nouveauExam]);
+  
+            this.router.navigate(['/question']);
+          },
+          error: (err) => console.error("Erreur lors de l'ajout de l'examen", err)
+        });
+      } else {
+        console.error("creatorId manquant dans le localStorage");
+      }
+    } else {
+      console.error("Formulaire invalide");
     }
   }
+  
+  cancel() {
+    this.activeModal.close();
+  }
 
-    
-    
-      cancel() {
-        this.router.navigate(['/']);
-      }
 }

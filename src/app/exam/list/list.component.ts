@@ -15,6 +15,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ListComponent {
 exams: any;
+/*
 @ViewChild("nomLoupe") loupeComponent!: LoupeComponent;
 constructor(private examService : examService,private modal:NgbModal){}
 ngAfterViewInit(){
@@ -45,5 +46,5 @@ dialogRef.result.then(data=>{
    this.deleteexam(exam)
  }
 })
-}
+}*/
 }

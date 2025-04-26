@@ -7,7 +7,9 @@ import { routes } from './app/app.routes';
 import { provideHttpClient } from '@angular/common/http';
 
 
-bootstrapApplication(AppComponent, appConfig,)
+bootstrapApplication(AppComponent,
+    
+    appConfig,)
 .catch(err => console.error(err));
 
 

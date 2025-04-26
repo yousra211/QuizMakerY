@@ -36,11 +36,6 @@ export class SignupComponent {
       { validator: this.passwordMatchValidator });
   }
 
-  
-
-  /*closeForm() {
-    this.showForm = false;
-  }*/
     fermer() {
       this.activeModal.close();
     }
@@ -67,21 +62,5 @@ export class SignupComponent {
     return g.get('password')?.value === g.get('confirmPassword')?.value
       ? null : { 'mismatch': true };
   }
-/*
-  onSubmit() {
-    if (this.signupForm.valid) {
-      this.signupService.registerCreator(this.signupForm).subscribe({
-        next: () => {
-          this.signupMessage = 'Inscription réussie!';
-          this.signupForm.reset();
-          setTimeout(() => this.router.navigate(['/login']), 2000);
-        },
-        error: (error) => {
-          this.signupError = error.error || 'Échec de l\'inscription.';
-        }
-      });
-    }
-  }
-    */
-   
+
 }
