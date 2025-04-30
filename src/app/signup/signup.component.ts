@@ -30,6 +30,7 @@ export class SignupComponent {
      private signupService: SignupService, private http: HttpClient, private router: Router) {
     this.signupForm = this.fb.group({
       fullname: ['', Validators.required],
+      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       confirmPassword: ['', Validators.required]}, 
@@ -46,6 +47,7 @@ export class SignupComponent {
       const newcreatorData = {
         
         fullname: this.signupForm.value.fullname,
+        username: this.signupForm.value.username,
         email: this.signupForm.value.email,
         password: this.signupForm.value.password,
         confirmPassword: this.signupForm.value.confirmPassword

@@ -15,6 +15,9 @@ exams=[
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 
+import { Exam } from './exam.model';
+ 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,6 +29,9 @@ export class ExamService {
   this.getExams()
    }
  
+   createQuiz(quiz: { title: string; questions: { text: string; type: string; answers: { text: string; isCorrect: boolean; }[]; }[]; }) {
+    throw new Error('Method not implemented.');
+  }
    getExams(){
   this.http.get(this.backEndUrl).subscribe(data=>{
    this.exams=data

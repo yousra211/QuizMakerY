@@ -40,15 +40,10 @@ export class MakequizComponent {
       };
   
       const creatorId = localStorage.getItem('creatorId');
-      console.log("creatorId dans localStorage:", creatorId);
       if (creatorId) {
-        console.log("Contenu examData à envoyer:", examData);
-
         this.makequizService.addExamForCreator(+creatorId, examData).subscribe({
-          next: (nouveauExam) => {
-            // Facultatif : mettre à jour un signal local si tu veux
-            // this.makequizService.newexams.update(state => [...state, nouveauExam]);
-  
+          next: () => {
+           
             this.router.navigate(['/question']);
           },
           error: (err) => console.error("Erreur lors de l'ajout de l'examen", err)

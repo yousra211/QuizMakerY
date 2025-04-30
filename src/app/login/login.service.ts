@@ -16,10 +16,15 @@ export class LoginService {
   login(payload: LoginRequest): Observable<CreatorResponse> {
     return this.http.post<CreatorResponse>(`${this.baseUrl}/login`, payload)
     .pipe(
-      tap(creator => {
+      tap((response: CreatorResponse) => {
         // Stocker les identifiants pour l'authentification Basic
         const basicAuth = btoa(`${payload.email}:${payload.password}`);
         localStorage.setItem('basicAuth', basicAuth);
+     
+        localStorage.setItem('creatorId', response.id.toString());
+        localStorage.setItem('creatorFullName', response.fullname);
+        localStorage.setItem('creatorUserName', response.username); // Utilisez le username renvoyé par l'API
+        localStorage.setItem('creatorEmail', response.email); // Utilisez l'email renvoyé par l'API
       })
     );
 }
@@ -29,7 +34,7 @@ export class LoginService {
     localStorage.removeItem('creatorId');
     localStorage.removeItem('creatorName');
     localStorage.removeItem('basicAuth'); 
-    // Rediriger vers login
+    
     this.router.navigate(['/login']);
   }
   getAuthHeaders() {

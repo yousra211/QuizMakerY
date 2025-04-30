@@ -15,10 +15,8 @@ newexams=signal<exam[]>([])
 
   
   addExamForCreator(creatorId: number, newExam: exam) {
-    const headers = this.loginService.getAuthHeaders();
-    console.log("Headers envoyés:", headers); // Pour déboguer
-    
-    const url = `${this.backEndURL}/creator/${creatorId}/exam`;
-    return this.http.post<exam>(url, newExam, { headers });
+ //   const headers = this.loginService.getAuthHeaders();
+ const url = `${this.backEndURL}/creator/${creatorId}/exam`;
+    return this.http.post<exam>(url, newExam);
   }
 }

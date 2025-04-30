@@ -1,73 +1,110 @@
-
-.landing-content {
-  background-color: rgba(187, 222, 240, 0.38);
-  padding: 30px 20px;
-  text-align: left; /* Align text to the left */
-  border-radius: 17px;
-  margin-top: 60px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-left: 0; /* Align the div to the left */
-  max-width: 600px; /* Optional: Set a max width for better alignment */
-  margin-bottom:60px;
-  padding-left: 20px;
-}
-
-
-
-.description {
-  max-width: 300px;
-  margin: 0 auto;
-
-}
-
-.description p {
-  font-size: 18px;
-  line-height: 1.6;
-  margin-bottom: 30px;
-  text-align: left; 
-}
-
-.cta-section{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 42px;
-  border: 1.2px solid #333;
-  border-radius: 17px;
-  padding-left: 15px;
-  padding-right: 15px;
-  background-color: rgba(255, 255, 255, 0.5);
- 
-}
-.cta-section p{
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  transition: transform 0.3s;
- padding-left: 15px;
-  padding-right: 15px;
-}
-.create-quiz {
-  background-color: rgba(55, 74, 84, 0.59);
-  color: #202B31;
-  border: none;
-  border-radius: 17px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  
-}
-
-.create-quiz:hover {
-  background-color: #202B31;
-  color: white;
-}
-
-footer {
+/* Features Section Styles */
+.features {
+  padding: 5rem 0;
+  background-color: rgba(255, 255, 255, 0.6);
   text-align: center;
-  padding: 20px 0;
-  color: #202B31;
-  background-color:rgba(255, 255, 255, 0.8);
+  border-radius: 17px;
+}
 
+.features .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.features h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #2b2d42;
+  position: relative;
+  display: inline-block;
+}
+
+.features h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--accent-color);
+  border-radius: 2px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  margin-top: 4rem;
+}
+
+.feature-card {
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: rgba(67, 97, 238, 0.1);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover .icon {
+  background: var(--primary-color);
+  color: white;
+  transform: scale(1.1);
+}
+
+.feature-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #2b2d42;
+}
+
+.feature-card p {
+  color: #6c757d;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .features {
+      padding: 3rem 0;
+  }
+  
+  .features h2 {
+      font-size: 2rem;
+  }
+  
+  .features-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      max-width: 500px;
+      margin: 3rem auto 0;
+  }
+  
+  .feature-card {
+      padding: 2rem 1.5rem;
+  }
 }

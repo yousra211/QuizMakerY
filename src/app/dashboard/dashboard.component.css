@@ -1,0 +1,30 @@
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  .d-flex {
+    height: 100vh; /* toute la hauteur de la fenêtre */
+  }
+  
+  .menu-container {
+    background-color: transparent; /* PAS de fond */
+    width: 200px;
+    height: 100%;
+    padding: 10px;
+    border: none; /* PAS de cadre autour du menu */
+  }
+  
+  .menu-container button {
+    border: 1px solid #87CEFA; /* Cadre bleu ciel autour de CHAQUE bouton */
+    margin-bottom: 5px;
+    text-align: left;
+    width: 100%;
+    background: none;
+  }
+  
+  .menu-container button.active {
+    background-color: #b3e5fc; /* Fond bleu clair pour l'élément actif */
+    border-radius: 4px;
+  }
+  

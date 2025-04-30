@@ -1,0 +1,26 @@
+<div class="d-flex">
+    <div ngbNav #nav="ngbNav"
+         [(activeId)]="active"
+         class="nav-pills flex-column p-3 menu-container"
+         orientation="vertical">
+         
+      <ng-container ngbNavItem="profile">
+        <button ngbNavLink>My Profile</button>
+        <ng-template ngbNavContent>
+          <app-profile></app-profile> 
+        </ng-template>
+      </ng-container>
+  
+      <ng-container ngbNavItem="exams">
+        <button ngbNavLink>My Exams</button>
+        <ng-template ngbNavContent>
+          <p>Here are your exams.</p>
+        </ng-template>
+      </ng-container>
+  
+    </div>
+  
+    <div [ngbNavOutlet]="nav" class="ms-4 flex-grow-1"></div>
+
+  </div>
+  

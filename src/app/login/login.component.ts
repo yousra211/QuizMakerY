@@ -40,12 +40,9 @@ export class LoginComponent {
 
       this.loginService.login(loginPayload).subscribe({
         next: (creator: CreatorResponse) => {
-          console.log("creator connecté:", creator);
-          localStorage.setItem('creatorId', creator.id.toString());
-          localStorage.setItem('creatorName', creator.fullname);
-          localStorage.setItem('email', this.loginForm.value.email);
-          localStorage.setItem('password', this.loginForm.value.password);
-          this.router.navigate(['/home']);//mo2aqatan home khsa dkon dashboard
+          console.log('Créateur connecté:', creator);
+          // localStorage.setItem('password', this.loginForm.value.password);
+          this.router.navigate(['/dashboard']);//mo2aqatan home khsa dkon dashboard
         },
         error: (err) => {
           console.error('Login error', err);
