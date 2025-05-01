@@ -1,29 +1,48 @@
 <div class="card user-profile-card">
-    <div class="card-body d-flex">
-      <div class="profile-image-container">
-        <img src="assets/profile.jpeg"  alt="Profile" class="profile-image" />
-      </div>
-      <div class="ms-4 flex-grow-1">
-        <h5>User profile</h5>
-
-
+  <div class="card-body d-flex">
+    <div class="profile-image-container">
+      <img src="assets/profile.jpeg" alt="Profile" class="profile-image" />
+    </div>
+    <div class="ms-4 flex-grow-1">
+      <h5>User profile</h5>
+      
+      <!-- Mode lecture -->
+      <div *ngIf="!editMode">
         <div class="form-group mb-3">
-            <label class="form-label">Fullname </label>
-            <div class="form-control">{{ fullname }}</div>
-          </div>
-
-        <div class="form-group ">
-          <label class="form-label">Username </label>
+          <label class="form-label">Fullname</label>
+          <div class="form-control">{{ fullname }}</div>
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label">Username</label>
           <div class="form-control">{{ username }}</div>
         </div>
-
-        <div class="form-group">
+        <div class="form-group mb-3">
           <label class="form-label">Email</label>
           <div class="form-control">{{ email }}</div>
         </div>
-        <button class="btn btn-primary mt-3" (click)="modifier()">Modifier</button>
-
+        <button class="btn btn-primary mt-3" (click)="toggleEditMode()">Modifier</button>
       </div>
+      
+      <!-- Mode édition -->
+      <div *ngIf="editMode">
+        <div class="form-group mb-3">
+          <label class="form-label">Fullname</label>
+          <input type="text" class="form-control" [(ngModel)]="creator.fullname">
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control" [(ngModel)]="creator.username">
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label">Email</label>
+          <input type="text" class="form-control" [(ngModel)]="creator.email">
+        </div>
+        <div class="mt-3">
+          <button class="btn btn-success me-2" (click)="saveChanges()">Enregistrer</button>
+          <button class="btn btn-secondary" (click)="cancelEdit()">Annuler</button>
+        </div>
+      </div>
+      
     </div>
   </div>
- 
+</div>

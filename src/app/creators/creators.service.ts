@@ -58,10 +58,23 @@ this.http.put<Creator>(this.backEndURL,creator).subscribe(updatedCreator=>{
 
 }*/
 //partie utiliser 
-updateCreator(creator: CreatorResponse): Observable<CreatorResponse> {
+
+/*updateCreator(creator: CreatorResponse): Observable<CreatorResponse> {
 	const url = `${this.backEndURL}/creators/${creator.id}`;
 	return this.http.put<CreatorResponse>(url, creator);
   }
-  
+  */
+  updateCreator(creator: CreatorResponse): Observable<CreatorResponse> {
+    const url = `${this.backEndURL}/${creator.id}`;
+    console.log('URL de l\'appel API:', url);
+    
+    // Ajouter des en-têtes pour le débogage des erreurs CORS
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    
+    console.log('Envoi de la requête avec les données:', creator);
+    return this.http.put<CreatorResponse>(url, creator, { headers });
+  }
 
 }
