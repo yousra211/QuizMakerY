@@ -58,12 +58,26 @@ this.http.put<Creator>(this.backEndURL,creator).subscribe(updatedCreator=>{
 
 }*/
 //partie utiliser 
+getCreatorById(id: number): Observable<CreatorResponse> {
+    const url = `${this.backEndURL}/${id}`;
+    return this.http.get<CreatorResponse>(url);
+  }
 
-/*updateCreator(creator: CreatorResponse): Observable<CreatorResponse> {
-	const url = `${this.backEndURL}/creators/${creator.id}`;
+updateCreator(creator: CreatorResponse): Observable<CreatorResponse> {
+    const url = `${this.backEndURL}/${creator.id}`;
+	const creatorData = {
+		id: creator.id,
+		fullname: creator.fullname,
+		username: creator.username,
+		email: creator.email,
+		
+		// Incluez uniquement les propriétés attendues par le backend
+	  };
 	return this.http.put<CreatorResponse>(url, creator);
   }
-  */
+
+  
+  /*
   updateCreator(creator: CreatorResponse): Observable<CreatorResponse> {
     const url = `${this.backEndURL}/${creator.id}`;
     console.log('URL de l\'appel API:', url);
@@ -76,5 +90,5 @@ this.http.put<Creator>(this.backEndURL,creator).subscribe(updatedCreator=>{
     console.log('Envoi de la requête avec les données:', creator);
     return this.http.put<CreatorResponse>(url, creator, { headers });
   }
-
+*/
 }
