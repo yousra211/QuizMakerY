@@ -18,33 +18,29 @@ export class ProfileComponent implements OnInit {
   username = '';
   email = '';
   editMode = false;
-  originalCreator: CreatorResponse = {
+  selectedFile: File | null = null;
+
+  originalCreator :CreatorResponse = {
     id: 0,
     fullname: '',
     username: '',
-    email: ''
+    email: '',
+    imageUrl: ''
   };
   
-  creator: CreatorResponse = {
+  creator:CreatorResponse = {
     id: 0,
     fullname: '',
     username: '',
-    email: ''
+    email: '',
+    imageUrl: ''
   };
 
-  // Propriété pour vérifier si localStorage est disponible
-  private get isLocalStorageAvailable(): boolean {
-    return typeof window !== 'undefined' && !!window.localStorage;
-  }
-
+ 
   constructor(private profileService: ProfileService) {}
 
   ngOnInit(): void {
-    if (!this.isLocalStorageAvailable) {
-      console.log('Rendu côté serveur détecté, localStorage non disponible');
-      return; // Sortir tôt si localStorage n'est pas disponible
-    }
-
+    
     // Récupérer l'ID du créateur depuis le localStorage
     const creatorId = localStorage.getItem('creatorId');
     
@@ -54,125 +50,77 @@ export class ProfileComponent implements OnInit {
       
       // Charger les données depuis le serveur
       this.loadCreatorData(id);
-    } else {
-      console.error('ID du créateur non trouvé dans le localStorage');
-      this.loadFromLocalStorage(); // Fallback sur localStorage
-    }
+    } 
   }
 
   loadCreatorData(id: number): void {
     // Tenter de charger les données depuis le serveur
-    this.profileService.getCreatorProfile(id)
-      .pipe(
-        catchError(error => {
-          console.error('Erreur lors du chargement des données:', error);
-          
-          // En cas d'erreur, utiliser les données du localStorage comme fallback
-          if (this.isLocalStorageAvailable) {
-            this.loadFromLocalStorage();
-          }
-          
-          // Retourner un observable vide pour continuer
-          return of(null);
-        })
-      )
-      .subscribe(response => {
-        if (response) {
+    this.profileService.getCreatorProfile(id).subscribe(response => {
+       
           // Mettre à jour les données du composant avec les données du serveur
           this.creator = response;
           this.originalCreator = {...response};
           
-          // Mettre à jour les variables individuelles pour l'affichage
-          this.fullname = response.fullname;
-          this.username = response.username;
-          this.email = response.email;
-          
-          // Mettre à jour le localStorage avec les données les plus récentes
-          if (this.isLocalStorageAvailable) {
-            this.updateLocalStorage(response);
-          }
-        }
+         
       });
   }
 
-  loadFromLocalStorage(): void {
-    if (!this.isLocalStorageAvailable) {
-      return;
-    }
-
-    // Récupérer les données du localStorage
-    this.fullname = localStorage.getItem('creatorFullName') ?? '';
-    this.username = localStorage.getItem('creatorUserName') ?? '';
-    this.email = localStorage.getItem('creatorEmail') ?? '';
-        
-    // Initialiser les données du creator
-    this.creator = {
-      id: +(localStorage.getItem('creatorId') ?? 0),
-      fullname: this.fullname,
-      username: this.username,
-      email: this.email,
-      photoUrl: localStorage.getItem('creatorPhoto') ?? ''
-    };
-        
-    // Conserver une copie des données originales
-    this.originalCreator = {...this.creator};
-  }
-
-  updateLocalStorage(creator: CreatorResponse): void {
-    if (!this.isLocalStorageAvailable) {
-      return;
-    }
-
-    localStorage.setItem('creatorId', creator.id.toString());
-    localStorage.setItem('creatorFullName', creator.fullname);
-    localStorage.setItem('creatorUserName', creator.username);
-    localStorage.setItem('creatorEmail', creator.email);
-    if (creator.photoUrl) {
-      localStorage.setItem('creatorPhoto', creator.photoUrl);
-    }
-  }
-
-  toggleEditMode() {
+  changeEditMode() {
     this.editMode = true;
+    this.selectedFile = null;
   }
   
   cancelEdit() {
     // Restaurer les valeurs originales
     this.creator = {...this.originalCreator};
     this.editMode = false;
+    this.selectedFile = null;
+  }
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0] as File;
   }
   
   saveChanges() {
-    // Appeler le service pour mettre à jour les données
-    this.profileService.updateCreatorProfile(this.creator).subscribe({
-      next: (response) => {
-        console.log('Mise à jour réussie:', response);
-                
-        // Mettre à jour les données locales et le localStorage
-        this.fullname = response.fullname;
-        this.username = response.username;
-        this.email = response.email;
-                
-        if (this.isLocalStorageAvailable) {
-          this.updateLocalStorage(response);
+    if (this.selectedFile) {
+      // Mise à jour avec nouvelle image
+      this.profileService.updateCreatorProfileWithImage(
+        this.creator.id,
+        this.creator.fullname,
+        this.creator.username,
+        this.creator.email,
+        this.selectedFile
+      ).subscribe({
+        next: (response) => {
+          this.creator = response;
+          this.originalCreator = {...response};
+          this.editMode = false;
+          this.selectedFile = null;
+        },
+        error: (error) => {
+          console.error('Erreur lors de la mise à jour du profil avec image', error);
+          alert('Erreur lors de la mise à jour du profil');
         }
-                
-        // Mettre à jour l'original pour les futures annulations
-        this.originalCreator = {...response};
-                
-        // Sortir du mode édition
-        this.editMode = false;
-      },
-      error: (error) => {
-        // Afficher plus de détails sur l'erreur
-        console.error('Erreur détaillée lors de la mise à jour:', error);
-        console.error('Status:', error.status);
-        console.error('Message:', error.message);
-        console.error('Erreur complète:', JSON.stringify(error));
-                
-        // Message d'erreur plus informatif
-        alert(`Erreur lors de la mise à jour du profil (${error.status}). Vérifiez la console pour plus de détails.`);
-      }
-    });
+      });
+    } else {
+      // Mise à jour sans nouvelle image
+      const creatorToUpdate = {
+        id: this.creator.id,
+        fullname: this.creator.fullname,
+        username: this.creator.username,
+        email: this.creator.email
+      };
+      
+      this.profileService.updateCreatorProfile(creatorToUpdate).subscribe({
+        next: (response) => {
+          this.creator = response;
+          this.originalCreator = {...response};
+          this.editMode = false;
+        },
+        error: (error) => {
+          console.error('Erreur lors de la mise à jour du profil', error);
+          alert('Erreur lors de la mise à jour du profil');
+        }
+      });
+    }
   }
 }

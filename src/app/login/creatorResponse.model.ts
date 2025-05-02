@@ -3,6 +3,6 @@ export interface CreatorResponse {
     fullname: string;
     username: string;
     email: string;
-    photoUrl?: string;
+    imageUrl?: string;
    
   }

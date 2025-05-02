@@ -20,21 +20,23 @@ export class ProfileService {
 
   // Mettre à jour le profil du créateur
   updateCreatorProfile(creator: CreatorResponse): Observable<CreatorResponse> {
-    // Créer un objet simplifié avec uniquement les propriétés nécessaires
-    const profileData = {
-      id: creator.id,
-      fullname: creator.fullname,
-      username: creator.username,
-      email: creator.email
-    };
+    return this.http.put<CreatorResponse>(`${this.baseUrl}/${creator.id}`, creator);
+  }
+   // Mettre à jour le profil du créateur avec une nouvelle image
+   updateCreatorProfileWithImage(
+    id: number,
+    fullname: string,
+    username: string,
+    email: string,
+    file: File
+  ): Observable<CreatorResponse> {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('fullname', fullname);
+    formData.append('username', username);
+    formData.append('email', email);
+    formData.append('file', file);
     
-    // Si photoUrl existe, l'ajouter à l'objet
-    if (creator.photoUrl) {
-      Object.assign(profileData, { photoUrl: creator.photoUrl });
-    }
-    
-    console.log('Données envoyées au backend:', JSON.stringify(profileData));
-    
-    return this.http.put<CreatorResponse>(`${this.baseUrl}/${creator.id}`, profileData);
+    return this.http.put<CreatorResponse>(`${this.baseUrl}/${id}/image`, formData);
   }
 }
