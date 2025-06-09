@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Question } from './question.model';
 import { Observable } from 'rxjs';
 
@@ -7,11 +7,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class QuestionService {
-  private apiUrl = 'http://localhost:8080/questions'; // backend
-
+  private apiUrl = 'http://localhost:8080'; // backend
+ newQuestions = signal<Question[]>([]);
+ 
   constructor(private http: HttpClient) {}
 
-  saveQuestions(questions: Question[]): Observable<any> {
-    return this.http.post(this.apiUrl, questions);
+  
+  addQuestionsForExam(examId: number, questionsData: Question[]): Observable<Question[]> {
+    // const headers = this.loginService.getAuthHeaders(); // Décommentez si vous utilisez l'authentification
+    const url = `${this.apiUrl}/exams/${examId}/questions`;
+    return this.http.post<Question[]>(url, questionsData);
   }
 }

@@ -1,0 +1,107 @@
+<!-- exam-view.component.html - Version propre -->
+<div class="exam-view-container">
+  <!-- Loading state -->
+  @if (loading()) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Chargement de l'examen...</p>
+    </div>
+  }
+
+  <!-- Error state -->
+  @else if (error()) {
+    <div class="error-container">
+      <h3>Erreur</h3>
+      <p>{{ error() }}</p>
+      <button class="btn btn-secondary" (click)="goBack()">Retour</button>
+    </div>
+  }
+
+  <!-- Exam content -->
+  @else if (exam()) {
+    <div class="exam-content">
+      <!-- Titre de l'examen -->
+      <h1 class="exam-title">{{ exam()?.title }}</h1>
+
+      <!-- Informations de l'examen -->
+      <div class="exam-info">
+        <div class="info-grid">
+          <div class="info-item">
+            <strong>Description:</strong>
+            <p>{{ exam()?.description }}</p>
+          </div>
+          
+          <div class="info-item">
+            <strong>Durée:</strong>
+            <p>{{ exam()?.duration }} minutes</p>
+          </div>
+          
+          <div class="info-item">
+            <strong>Lien unique:</strong>
+            <p class="unique-link">{{ exam()?.uniqueLink }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Questions -->
+      <div class="questions-section">
+        <h2>Questions ({{ questionsCount }})</h2>
+        
+        @if (questions.length > 0) {
+          @for (question of questions; track question.id; let i = $index) {
+            <div class="question-card">
+              <div class="question-header">
+                <span class="question-number">Question {{ i + 1 }}</span>
+                <span class="question-type"
+                      [class.type-direct]="question.type === 'directe'"
+                      [class.type-mcq]="question.type === 'QCM'">
+                  {{ question.type === 'directe' ? 'Question Directe' : 'QCM' }}
+                </span>
+                <span class="question-grade">{{ question.grade }} pts</span>
+              </div>
+              
+              <div class="question-content">
+                <h4>{{ question.text }}</h4>
+                
+                <!-- Pour les questions QCM -->
+                @if (question.type === 'QCM' && question.options && question.options.length > 0) {
+                  <div class="options-list">
+                    <h5>Options:</h5>
+                    @for (option of question.options; track option.text; let optIndex = $index) {
+                      <div class="option-item" [class.correct-option]="option.isCorrect">
+                        <span class="option-letter">{{ String.fromCharCode(65 + optIndex) }}.</span>
+                        <span class="option-text">{{ option.text }}</span>
+                        @if (option.isCorrect) {
+                          <span class="correct-indicator">✓ Correcte</span>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+                
+                <!-- Pour les questions directes -->
+                @if (question.type === 'directe') {
+                  <div class="direct-answer">
+                    <h5>Réponse attendue:</h5>
+                    <p class="answer-text">{{ question.response }}</p>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        } @else {
+          <div class="no-questions">
+            <p>Aucune question n'a été ajoutée à cet examen.</p>
+          </div>
+        }
+      </div>
+
+      <!-- Bouton modifier en bas à droite -->
+      <div class="floating-edit-btn">
+        <button class="btn btn-primary edit-btn" (click)="editExam()">
+          ✏️ Modifier
+        </button>
+      </div>
+    </div>
+  }
+</div>

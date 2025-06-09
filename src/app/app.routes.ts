@@ -14,6 +14,7 @@ import { CreatorsComponent } from './creators/creators.component';
 import { QuestionComponent } from './question/question.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ExamViewComponent } from './exam-view/exam-view.component';
 export const routes: Routes = [
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -27,6 +28,8 @@ export const routes: Routes = [
   {path: "navbar",component:NavbarComponent},
   {path: "dashboard",component:DashboardComponent},
   {path: "profile",component:ProfileComponent},
+  { path: 'exam-view/:id',component: ExamViewComponent
+}
 ];
 @NgModule({
  

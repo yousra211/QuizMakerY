@@ -1,11 +1,13 @@
+import { Question } from "../question/question.model";
+
 export interface Exam {
-    id?: string;
-    title: string;
-    description: string;
-    targetAudience: string;
-    accessLink: string;
-    createdBy: string;
-    createdAt: Date;
-    questions: string[]; // Array of question IDs
-    totalScore?: number;
-  }
+  id?: number;
+  title: string;
+  duration: number;
+  description: string;
+  uniqueLink: string;
+  password?: string;
+  creatorId?: number;
+  questions?: Question[];
+}
+

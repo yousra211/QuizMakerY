@@ -39,8 +39,8 @@
             
             <!-- Direct Answer -->
             <div *ngIf="question.get('type')?.value === 'direct'" class="form-group">
-              <label>Answer</label>
-              <input type="text" formControlName="answer" class="form-control">
+              <label>Response</label>
+              <input type="text" formControlName="response" class="form-control">
             </div>
             
             <!-- MCQ Options -->
@@ -61,7 +61,7 @@
             
             <!-- Points -->
             <div class="form-group">
-              <label>Points</label>
+              <label>Grade</label>
               <input type="number" formControlName="grade" class="form-control" min="0">
             </div>
           </div>
