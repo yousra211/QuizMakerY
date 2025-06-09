@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="panel">
+      <form [formGroup]="examForm" (ngSubmit)="onSubmit()">
+        <h3>Add Questions</h3>
+        
+        <!-- Question Type Buttons -->
+        <div class="add-buttons">
+          <button type="button" class="btn btn-primary" (click)="addQuestion('direct')">
+            Direct Question
+          </button>
+          <button type="button" class="btn btn-primary" (click)="addQuestion('mcq')">
+            MCQ
+          </button>
+        </div>
+        
+        <!-- Questions List -->
+        <div formArrayName="questions" class="questions-list">
+          <div *ngFor="let question of questions.controls; let i = index" 
+               [formGroupName]="i" class="question-card">
+            
+            <div class="question-header">
+              <h4>Question {{i + 1}} - {{question.get('type')?.value}}</h4>
+              <button type="button" (click)="removeQuestion(i)">×</button>
+            </div>
+            
+            <!-- Question Text -->
+            <div class="form-group">
+              <label>Question Text</label>
+              <textarea formControlName="statement" class="form-control" rows="2"></textarea>
+            </div>
+            
+            <!-- Media Type -->
+            <div class="form-group">
+              <label>Media Type (optional)</label>
+              <select formControlName="mediaType" class="form-control">
+                <option *ngFor="let type of mediaTypes" [value]="type">{{type}}</option>
+              </select>
+            </div>
+            
+            <!-- Direct Answer -->
+            <div *ngIf="question.get('type')?.value === 'direct'" class="form-group">
+              <label>Answer</label>
+              <input type="text" formControlName="answer" class="form-control">
+            </div>
+            
+            <!-- MCQ Options -->
+            <div *ngIf="question.get('type')?.value === 'mcq'">
+              <label>Options</label>
+              <div formArrayName="options">
+                <div *ngFor="let option of getOptions(i).controls; let j = index" 
+                     [formGroupName]="j" class="option">
+                  <input type="checkbox" formControlName="isCorrect">
+                  <input type="text" formControlName="text" class="form-control">
+                  <button type="button" (click)="removeOption(i, j)" *ngIf="getOptions(i).length > 2">×</button>
+                </div>
+              </div>
+              <button type="button" class="btn btn-sm" (click)="addOption(i)">
+                + Add Option
+              </button>
+            </div>
+            
+            <!-- Points -->
+            <div class="form-group">
+              <label>Points</label>
+              <input type="number" formControlName="grade" class="form-control" min="0">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Submit Buttons -->
+        <div class="action-buttons">
+          <button type="button" class="btn btn-secondary" (click)="examForm.reset()">Reset</button>
+          <button type="submit" class="btn btn-primary" 
+                  [disabled]="!examForm.valid || questions.length === 0">
+            Save Exam
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

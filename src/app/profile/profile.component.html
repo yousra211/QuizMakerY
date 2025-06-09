@@ -1,13 +1,26 @@
 <div class="card user-profile-card">
   <div class="card-body d-flex">
     <div class="profile-image-container position-relative">
-      <!-- Label qui agit comme bouton si editMode est actif -->
+      
+      <!-- Image cliquable en mode édition -->
       <label *ngIf="editMode" for="fileInput" class="cursor-pointer">
-        <img [src]="creator.imageUrl || 'assets/profile.jpeg'" alt="Profile" class="profile-image editable" />
+        <img
+        [src]="getProfileImageSrc()"
+        (error)="onImageError($event)"
+          alt="Profile"
+          class="profile-image editable"
+        />
       </label>
 
-      <!-- Image en mode lecture -->
-      <img *ngIf="!editMode" [src]="creator.imageUrl || 'assets/profile.jpeg'" alt="Profile" class="profile-image" />
+      <!-- Image non cliquable en mode lecture -->
+      <img
+        *ngIf="!editMode"
+        [src]="getProfileImageSrc()"
+        (error)="onImageError($event)"
+
+        alt="Profile"
+        class="profile-image"
+      />
 
       <!-- Champ fichier invisible -->
       <input
@@ -17,6 +30,7 @@
         (change)="onFileSelected($event)"
         accept="image/jpeg,image/png"
       />
+
     </div>
 
     <div class="ms-4 flex-grow-1">

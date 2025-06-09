@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -13,95 +13,71 @@ import { NgbActiveModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './question.component.css',
   providers: [NgbActiveModal ,   ReactiveFormsModule] 
 })
-export class QuestionComponent {
-  examForm: FormGroup | undefined;
-  mediaTypes: string[] = ['image', 'audio', 'video']; // Si tu veux proposer des médias
-/*
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+export class QuestionComponent implements OnInit {
+
+  examForm: FormGroup;
+  mediaTypes = ['None', 'Image', 'Video', 'Audio'];
+
+  constructor(private fb: FormBuilder) {
     this.examForm = this.fb.group({
       questions: this.fb.array([])
     });
   }
+ngOnInit(): void {
 
-  // Raccourci pour accéder au tableau des questions
-  get questions(): FormArray {
+}
+
+  get questions() {
     return this.examForm.get('questions') as FormArray;
   }
 
-  // Ajouter une nouvelle question
-  addQuestion(type: string): void {
-    const questionForm = this.fb.group({
-      type: [type, Validators.required],
+  getOptions(questionIndex: number) {
+    return this.questions.at(questionIndex).get('options') as FormArray;
+  }
+
+  addQuestion(type: string) {
+    const questionGroup = this.fb.group({
+      type: [type],
       statement: ['', Validators.required],
-      mediaType: ['none'],
-      answer: [''], // utilisé seulement pour question directe
-      options: this.fb.array([
-        this.createOption(),
-        this.createOption()
-      ]), // utilisé seulement pour QCM
-      grade: [0, [Validators.required, Validators.min(0)]],
-      duration: [60, [Validators.required, Validators.min(1)]]
+      mediaType: ['None'],
+      grade: [1, [Validators.required, Validators.min(0)]],
+      answer: [''],
+      options: this.fb.array(type === 'mcq' ? this.createInitialOptions() : [])
     });
 
-    this.questions.push(questionForm);
+    this.questions.push(questionGroup);
   }
 
-  // Créer une option pour les QCM
-  createOption(): FormGroup {
+  createInitialOptions() {
+    return [
+      this.createOption('', false),
+      this.createOption('', false)
+    ];
+  }
+
+  createOption(text: string, isCorrect: boolean) {
     return this.fb.group({
-      text: ['', Validators.required],
-      isCorrect: [false]
+      text: [text, Validators.required],
+      isCorrect: [isCorrect]
     });
   }
 
-  // Ajouter une option à une question QCM
-  addOption(questionIndex: number): void {
-    const options = this.questions.at(questionIndex).get('options') as FormArray;
-    options.push(this.createOption());
+  addOption(questionIndex: number) {
+    this.getOptions(questionIndex).push(this.createOption('', false));
   }
 
-  // Supprimer une option d'une question QCM
-  removeOption(questionIndex: number, optionIndex: number): void {
-    const options = this.questions.at(questionIndex).get('options') as FormArray;
-    if (options.length > 2) {
-      options.removeAt(optionIndex);
-    }
+  removeOption(questionIndex: number, optionIndex: number) {
+    this.getOptions(questionIndex).removeAt(optionIndex);
   }
 
-  // Supprimer une question
-  removeQuestion(index: number): void {
-    this.questions.removeAt(index);
+  removeQuestion(questionIndex: number) {
+    this.questions.removeAt(questionIndex);
   }
 
-  // Fonction appelée quand tu cliques sur "Créer l'examen"
-  onSubmit(): void {
+  onSubmit() {
     if (this.examForm.valid) {
-      const questionsPayload = this.examForm.value.questions;
-      this.http.post('http://localhost:8080/questions', questionsPayload).subscribe(
-        (        response: any) => {
-          console.log('Questions enregistrées avec succès!', response);
-          alert('Examen créé avec succès!');
-          this.examForm.reset();
-          this.questions.clear(); // Vide les questions après enregistrement
-        },
-        (        error: any) => {
-          console.error('Erreur lors de l\'enregistrement des questions', error);
-          alert('Erreur lors de la création de l\'examen.');
-        }
-      );
-    } else {
-      alert('Veuillez remplir toutes les informations des questions.');
+      console.log('Quiz submitted:', this.examForm.value);
+      
     }
   }
-
-  // Récupérer le FormArray des options d'une question
-  getOptionsFromQuestion(index: number): FormArray {
-    return this.questions.at(index).get('options') as FormArray;
-  }
-}
-
-
-closeModal() {
-  this.activeModal.close();
-}*/
 }

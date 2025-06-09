@@ -42,8 +42,8 @@ export class MakequizComponent {
       const creatorId = localStorage.getItem('creatorId');
       if (creatorId) {
         this.makequizService.addExamForCreator(+creatorId, examData).subscribe({
-          next: () => {
-           
+          next: (response:exam) => {
+            localStorage.setItem('currentExamId', response.id!.toString());
             this.router.navigate(['/question']);
           },
           error: (err) => console.error("Erreur lors de l'ajout de l'examen", err)

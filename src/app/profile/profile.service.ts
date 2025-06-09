@@ -31,12 +31,15 @@ export class ProfileService {
     file: File
   ): Observable<CreatorResponse> {
     const formData = new FormData();
-    formData.append('id', id.toString());
+  
     formData.append('fullname', fullname);
     formData.append('username', username);
     formData.append('email', email);
-    formData.append('file', file);
-    
+    formData.append('file', file); // Nom exact attendu côté backend
+  
     return this.http.put<CreatorResponse>(`${this.baseUrl}/${id}/image`, formData);
   }
+  
+  
+  
 }

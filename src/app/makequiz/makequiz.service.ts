@@ -14,9 +14,9 @@ newexams=signal<exam[]>([])
   constructor(private http:HttpClient , private loginService: LoginService) { }
 
   
-  addExamForCreator(creatorId: number, newExam: exam) {
+  addExamForCreator(creatorId: number, examData: exam) {
  //   const headers = this.loginService.getAuthHeaders();
  const url = `${this.backEndURL}/creator/${creatorId}/exam`;
-    return this.http.post<exam>(url, newExam);
+    return this.http.post<exam>(url, examData);
   }
 }
