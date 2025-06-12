@@ -1,4 +1,3 @@
-<!-- exam-view.component.html - Version propre -->
 <div class="exam-view-container">
   <!-- Loading state -->
   @if (loading()) {
@@ -64,26 +63,31 @@
                 <h4>{{ question.text }}</h4>
                 
                 <!-- Pour les questions QCM -->
-                @if (question.type === 'QCM' && question.options && question.options.length > 0) {
-                  <div class="options-list">
-                    <h5>Options:</h5>
-                    @for (option of question.options; track option.text; let optIndex = $index) {
-                      <div class="option-item" [class.correct-option]="option.isCorrect">
-                        <span class="option-letter">{{ String.fromCharCode(65 + optIndex) }}.</span>
-                        <span class="option-text">{{ option.text }}</span>
-                        @if (option.isCorrect) {
-                          <span class="correct-indicator">✓ Correcte</span>
-                        }
-                      </div>
-                    }
-                  </div>
+                @if (question.type === 'QCM') {
+                  @let options = getQuestionOptions(question);
+                  @if (options.length > 0) {
+                    <div class="options-list">
+                      <h5>Options:</h5>
+                      @for (option of options; track option.text; let optIndex = $index) {
+                        <div class="option-item" [class.correct-option]="option.isCorrect">
+                          <span class="option-letter">{{ String.fromCharCode(65 + optIndex) }}.</span>
+                          <span class="option-text">{{ option.text }}</span>
+                          @if (option.isCorrect) {
+                            <span class="correct-indicator">✓ Correcte</span>
+                          }
+                        </div>
+                      }
+                    </div>
+                  } @else {
+                    <p class="no-options">Aucune option définie pour cette question QCM</p>
+                  }
                 }
                 
                 <!-- Pour les questions directes -->
                 @if (question.type === 'directe') {
                   <div class="direct-answer">
                     <h5>Réponse attendue:</h5>
-                    <p class="answer-text">{{ question.response }}</p>
+                    <p class="answer-text">{{ formatCorrectAnswer(question) }}</p>
                   </div>
                 }
               </div>

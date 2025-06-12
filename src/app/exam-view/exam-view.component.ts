@@ -35,7 +35,6 @@ export class ExamViewComponent implements OnInit {
     return this.questions.length;
   }
   
-
   ngOnInit(): void {
     const examId = this.route.snapshot.params['id'];
     if (examId) {
@@ -46,7 +45,6 @@ export class ExamViewComponent implements OnInit {
     }
   }
 
-  
   loadExamDetails(examId: number): void {
     this.examService.getExamWithQuestions(examId).subscribe({
       next: (exam: Exam) => {
@@ -75,30 +73,69 @@ export class ExamViewComponent implements OnInit {
     this.router.navigate(['/dashboard']);
   }
 
-  // Formater les options pour les questions QCM
-formatOptions(question: Question): string {
-  if (question.options && question.options.length > 0) {
-    return question.options
-      .map((option, index) => 
-        `${String.fromCharCode(65 + index)}. ${option.text} ${option.isCorrect ? '✓' : ''}`
-      )
+  // NOUVELLE MÉTHODE : Parser les options depuis le JSON string
+  getQuestionOptions(question: Question): QuestionOption[] {
+    if (!question.options || question.type === 'directe') {
+      return [];
+    }
+
+    try {
+      // Si c'est un simple string (1 seule option), on le convertit en QuestionOption
+      if (typeof question.options === 'string' && !question.options.startsWith('[')) {
+        return [{ text: question.options, isCorrect: true }];
+      }
+      
+      // Si c'est un JSON array, on le parse
+      const parsed = JSON.parse(question.options);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      console.error('Erreur lors du parsing des options:', error);
+      return [];
+    }
+  }
+
+  // NOUVELLE MÉTHODE : Obtenir les réponses correctes parsées
+  getCorrectAnswers(question: Question): string[] {
+    if (question.type === 'directe') {
+      return question.response ? [question.response] : [];
+    }
+
+    if (!question.response) {
+      return [];
+    }
+
+    try {
+      // Si c'est un simple string
+      if (!question.response.startsWith('[')) {
+        return [question.response];
+      }
+      
+      // Si c'est un JSON array
+      const parsed = JSON.parse(question.response);
+      return Array.isArray(parsed) ? parsed : [question.response];
+    } catch (error) {
+      return [question.response];
+    }
+  }
+
+  // Formater les options pour les questions QCM (version simplifiée)
+ formatOptions(question: Question): string {
+  const options = this.getQuestionOptions(question);
+  if (options.length > 0) {
+    return options
+      .map((option, index) => {
+        const letter = String.fromCharCode(65 + index);
+        const checkMark = option.isCorrect ? '✓' : '';
+        return letter + '. ' + option.text + ' ' + checkMark;
+      })
       .join('\n');
   }
   return '';
 }
 
-// Formater la réponse correcte
-formatCorrectAnswer(question: Question): string {
-  if (question.type === 'directe') {
-    return question.response || 'Aucune réponse définie';
-  } else if (question.type === 'QCM') {
-    if (question.options) {
-      const correctOptions = question.options
-        .filter(option => option.isCorrect)
-        .map(option => option.text);
-      return correctOptions.join(', ') || 'Aucune réponse correcte définie';
-    }
+  // Formater la réponse correcte
+  formatCorrectAnswer(question: Question): string {
+    const correctAnswers = this.getCorrectAnswers(question);
+    return correctAnswers.length > 0 ? correctAnswers.join(', ') : 'Aucune réponse définie';
   }
-  return 'N/A';
-}
 }

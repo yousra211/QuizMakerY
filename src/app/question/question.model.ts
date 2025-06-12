@@ -9,5 +9,5 @@ export interface Question {
   type: string; // "directe" ou "QCM"
   grade: number;
   response?: string; // pour stocker la bonne réponse pour une question directe
-    options?: QuestionOption[] ; // liste de réponses possibles pour QCM
+    options?: string ; // liste de réponses possibles pour QCM
 }
