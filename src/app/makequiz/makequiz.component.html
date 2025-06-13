@@ -22,11 +22,12 @@
       </div>
 
 
+       <!-- Unique Link Field -->
       <div class="form-group">
-        <label>Lien unique d'accès</label>
+        <label>Unique Access Link</label>
         <div class="unique-link">
           <input type="text" [value]="uniqueLink" readonly class="form-control">
-          <button type="button" class="btn" >Regénérer</button>
+          <button type="button" class="btn" (click)='generateUniqueLink()'>Regenerate</button>
         </div>
       </div>
 

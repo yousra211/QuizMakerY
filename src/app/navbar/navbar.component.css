@@ -51,13 +51,7 @@
   border-radius: 17px;
 }
 
-.log-in, .sign-up {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  text-transform: lowercase;
-  border-radius: 17px;
-}
+
 
 .log-in {
   background-color: transparent;
@@ -67,4 +61,17 @@
 .sign-up {
   background-color: transparent; /* Fixed the incomplete property */
   color: white;
+}
+
+.log-in, .sign-up, .log-out {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  text-transform: lowercase;
+  border-radius: 17px;
+}
+
+.log-out {
+  background-color: transparent;
+  color: #202B31;
 }

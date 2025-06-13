@@ -56,6 +56,17 @@ export class MakequizComponent {
     }
   }
   
+  generateUniqueLink(): void {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < 10; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    this.uniqueLink = `${window.location.origin}/exam/${result}`;
+    this.makequizForm.patchValue({ uniqueLink: this.uniqueLink });
+  }
+
   cancel() {
     this.activeModal.close();
   }

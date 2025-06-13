@@ -4,5 +4,6 @@ export interface CreatorResponse {
     username: string;
     email: string;
     photoUrl?: string;
-   
+    roles?: string[];  // Add this line
+    active?: boolean; // Add this line
   }

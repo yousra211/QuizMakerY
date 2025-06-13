@@ -5,4 +5,6 @@ export interface Creator{
     email:string
     password:string
     photo:string
+    active : boolean
+    roles : string
 } 

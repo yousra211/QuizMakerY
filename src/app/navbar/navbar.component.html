@@ -9,10 +9,17 @@
         <li><a routerLink="/makequiz">makequiz</a></li>
       </ul>
       <div class="auth-buttons">
-        <button class="log-in" routerLink="/login">log in</button>
-        <button class="sign-up" routerLink="/signup">sign up</button>
+        <!-- Afficher les boutons login/signup si pas connecté -->
+        <ng-container *ngIf="!isLoggedIn()">
+          <button class="log-in" routerLink="/login">log in</button>
+          <button class="sign-up" routerLink="/signup">sign up</button>
+        </ng-container>
+        
+        <!-- Afficher le bouton logout si connecté -->
+        <ng-container *ngIf="isLoggedIn()">
+          <button class="log-out" (click)="logout()">logout</button>
+        </ng-container>
       </div>
     </div>
   </nav>
 </div>
-  

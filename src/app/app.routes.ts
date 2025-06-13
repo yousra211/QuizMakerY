@@ -15,6 +15,9 @@ import { QuestionComponent } from './question/question.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ExamViewComponent } from './exam-view/exam-view.component';
+import { ListComponent } from './creators/list/list.component';
+import { AdminGuard } from './login/admin.guard';
+import { FooterComponent } from './shared/footer/footer.component';
 export const routes: Routes = [
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -22,14 +25,18 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent }, 
   { path: 'makequiz', component: MakequizComponent },
   { path: 'login', component: LoginComponent },
+  // { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
   {path: "creators",component:CreatorsComponent },
   {path: "exam",component:ExamComponent},
+  //{path: '**', redirectTo: 'home' } ,
   {path: "navbar",component:NavbarComponent},
+   {path: 'footer', component: FooterComponent},
   {path: "dashboard",component:DashboardComponent},
   {path: "profile",component:ProfileComponent},
-  { path: 'exam-view/:id',component: ExamViewComponent
-}
+  { path: 'exam-view/:id',component: ExamViewComponent},
+ { path: 'admin', canActivate: [AdminGuard], children: [{ path: 'creators', component: ListComponent }]},
+  { path: 'creator/list', component: ListComponent }
 ];
 @NgModule({
  

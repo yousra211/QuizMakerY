@@ -7,13 +7,15 @@ html, body {
     height: 100vh; /* toute la hauteur de la fenêtre */
   }
   
-  .menu-container {
-    background-color: transparent; /* PAS de fond */
-    width: 200px;
-    height: 100%;
-    padding: 10px;
-    border: none; /* PAS de cadre autour du menu */
-  }
+.menu-container {
+  background-color: transparent;
+  width: 150px; /* largeur fixe */
+  height: 100vh; /* toujours pleine hauteur */
+  padding: 10px;
+  border: none;
+  flex-shrink: 0; /* empêche de se réduire */
+  box-sizing: border-box;
+}
   
   .menu-container button {
     border: 1px solid #87CEFA; /* Cadre bleu ciel autour de CHAQUE bouton */

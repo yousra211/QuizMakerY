@@ -26,11 +26,10 @@ export class SignupComponent {
   signupError: string = '';
  
 
-  constructor(private fb: FormBuilder,private activeModal: NgbActiveModal,
+    constructor(private fb: FormBuilder,private activeModal: NgbActiveModal,
      private signupService: SignupService, private http: HttpClient, private router: Router) {
     this.signupForm = this.fb.group({
       fullname: ['', Validators.required],
-      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       confirmPassword: ['', Validators.required]}, 
