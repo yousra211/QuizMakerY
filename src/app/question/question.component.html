@@ -29,13 +29,7 @@
               <textarea formControlName="statement" class="form-control" rows="2"></textarea>
             </div>
             
-            <!-- Media Type -->
-            <div class="form-group">
-              <label>Media Type (optional)</label>
-              <select formControlName="mediaType" class="form-control">
-                <option *ngFor="let type of mediaTypes" [value]="type">{{type}}</option>
-              </select>
-            </div>
+           
             
             <!-- Direct Answer -->
             <div *ngIf="question.get('type')?.value === 'direct'" class="form-group">

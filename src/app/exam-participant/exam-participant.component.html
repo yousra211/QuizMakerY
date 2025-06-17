@@ -1,0 +1,114 @@
+<div class="exam-participant-container">
+  <!-- Loading state -->
+  @if (loading()) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Chargement de l'examen...</p>
+    </div>
+  }
+
+  <!-- Error state -->
+  @else if (error()) {
+    <div class="error-container">
+      <h3>Erreur</h3>
+      <p>{{ error() }}</p>
+      <button class="btn btn-secondary" (click)="goBack()">Retour</button>
+    </div>
+  }
+
+  <!-- Exam content -->
+  @else if (exam()) {
+    <div class="exam-content">
+      <!-- Titre de l'examen -->
+      <h1 class="exam-title">{{ exam()?.title }}</h1>
+
+<!-- Ajoutez cette section juste après le titre de l'examen -->
+
+  <div class="exam-timer">
+    <i class="fas fa-clock"></i>
+    <span>Temps restant: {{ timeLeft() }}</span>
+  </div>
+
+
+      <!-- Questions -->
+      <div class="questions-section">
+        <h2>Questions ({{ exam()?.questions?.length || 0 }})</h2>
+        
+        @if (exam()?.questions?.length) {
+          @for (question of questions; track question.id; let i = $index) {
+            <div class="question-card">
+              <div class="question-header">
+                <span class="question-number">Question {{ i + 1 }}</span>
+                <span class="question-type"
+                      [class.type-direct]="question.type === 'directe'"
+                      [class.type-mcq]="question.type === 'QCM'">
+                  {{ question.type === 'directe' ? 'Question Directe' : 'QCM' }}
+                </span>
+                <span class="question-grade">{{ question.grade }} pts</span>
+              </div>
+              
+              <div class="question-content">
+                <h4>{{ question.text }}</h4>
+                
+                <!-- Pour les questions QCM -->
+@if (question.type === 'QCM') {
+  @let options = getQuestionOptions(question);
+  @if (options.length > 0) {
+    <div class="options-list">
+      <h5>Choisissez une ou plusieurs réponses:</h5>
+      @for (option of options; track option.text; let optIndex = $index) {
+        <div class="option-item">
+          <label class="option-label">
+            <input 
+              type="checkbox"
+              [id]="'question_' + question.id + '_option_' + optIndex"
+              [value]="option.text"
+              (change)="onOptionChange(question.id, option.text, $event)"
+            style="margin-right: 10px;"> 
+            <span class="option-text">{{ option.text }}</span>
+          </label>
+        </div>
+      }
+    </div>
+  } @else {
+    <p class="no-options">Aucune option définie pour cette question QCM</p>
+  }
+}
+                
+                <!-- Pour les questions directes -->
+                @if (question.type === 'directe') {
+                  <div class="direct-answer-input">
+                    <h5>Votre réponse:</h5>
+                    <textarea 
+                      class="answer-textarea"
+                      [id]="'question_' + question.id + '_answer'"
+                      placeholder="Saisissez votre réponse ici..."
+                      rows="5"
+                      (input)="onDirectAnswerChange(question.id, $event)"
+                      aria-label="Réponse à la question">
+
+                    </textarea>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        } @else {
+          <div class="no-questions">
+            <p>Aucune question n'est disponible pour cet examen.</p>
+          </div>
+        }
+      </div>
+
+      <!-- Boutons d'action -->
+      <div class="exam-actions">
+        <button class="btn btn-secondary" (click)="goBack()">
+          Cancel
+        </button>
+        <button class="btn btn-primary" (click)="submitExam()">
+          Send exam
+        </button>
+      </div>
+    </div>
+  }
+</div>

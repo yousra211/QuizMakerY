@@ -1,5 +1,13 @@
 export interface Answer {
-    id?: number;
-    content: string;
-    isCorrect: boolean; // indique si c'est une réponse correcte (QCM)
-  }
+  id?: number;
+  text: string;
+  isCorrect: boolean | null;
+  questionId: number; // Nouveau champ important
+}
+
+export interface Participant {
+  id : number;
+	email: string ;
+	fullName :string ;
+	CIN : string  ;
+}

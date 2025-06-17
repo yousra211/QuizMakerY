@@ -18,6 +18,10 @@ export class ExamViewComponent implements OnInit {
   loading = signal<boolean>(true);
   error = signal<string>('');
   
+  uniqueLink: string = '';
+
+  
+
   // Exposer String.fromCharCode pour le template
   String = String;
 
@@ -43,6 +47,18 @@ export class ExamViewComponent implements OnInit {
       this.error.set('ID d\'examen manquant');
       this.loading.set(false);
     }
+
+    this.generateUniqueLink();
+  }
+
+ generateUniqueLink(): void {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < 10; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    this.uniqueLink = `${window.location.origin}/exam/${result}`;
   }
 
   loadExamDetails(examId: number): void {

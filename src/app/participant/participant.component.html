@@ -1,1 +1,36 @@
-<p>participant works!</p>
+<div class="form-container">
+  
+
+  <form [formGroup]="participantForm" (ngSubmit)="onSubmit()">
+    <h2>Please fill in the input fields </h2>
+
+    
+    <div class="form-group">
+      <input formControlName="email" type="text" class="form-control" placeholder="email">
+      <div *ngIf="participantForm.get('email')?.invalid && participantForm.get('email')?.touched" class="error-message">
+        <span *ngIf="participantForm.get('email')?.errors?.['required']">Email is required</span>
+        <span *ngIf="participantForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input formControlName="fullname" type="text" class="form-control" placeholder="fullname">
+      <div *ngIf="participantForm.get('fullname')?.invalid && participantForm.get('fullname')?.touched" class="error-message">
+        fullName is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input formControlName="cin" type="text" class="form-control" placeholder="CIN">
+      <div *ngIf="participantForm.get('cin')?.invalid && participantForm.get('cin')?.touched" class="error-message">
+        CIN is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Suivant -></button>
+    </div>
+
+    
+  </form>
+</div>

@@ -53,7 +53,7 @@ export class SignupComponent {
       };
 
       this.signupService.registerCreator( newcreatorData);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/login']);
     } else {
       console.error("Formulaire invalide ");
        }

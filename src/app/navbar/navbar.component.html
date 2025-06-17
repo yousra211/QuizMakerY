@@ -3,19 +3,19 @@
     <div class="logo">
       <img src="assets/QUIZYM.png" alt="Quizym Logo" />
     </div>
-    <div class="nav-links">
+    
+    <!-- Afficher les liens seulement si on n'est pas sur la page participant -->
+    <div class="nav-links" *ngIf="!isParticipantPage()">
       <ul>
         <li><a routerLink="/">home</a></li>
         <li><a routerLink="/makequiz">makequiz</a></li>
+        <li *ngIf="isLoggedIn()"><a routerLink="/dashboard">dashboard</a></li>
       </ul>
       <div class="auth-buttons">
-        <!-- Afficher les boutons login/signup si pas connecté -->
         <ng-container *ngIf="!isLoggedIn()">
           <button class="log-in" routerLink="/login">log in</button>
           <button class="sign-up" routerLink="/signup">sign up</button>
         </ng-container>
-        
-        <!-- Afficher le bouton logout si connecté -->
         <ng-container *ngIf="isLoggedIn()">
           <button class="log-out" (click)="logout()">logout</button>
         </ng-container>

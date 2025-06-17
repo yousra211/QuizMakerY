@@ -87,7 +87,14 @@ color: white;
   color: white;
   border-radius: 17px;
   transition: background-color 0.3s;
+
  }
+
+ .form-group {
+  display: flex;
+  justify-content: center;
+}
+
 
  .btn-primary:hover {
  background-color: #202B31; 

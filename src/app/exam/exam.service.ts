@@ -1,9 +1,12 @@
 // exam.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, Observable, switchMap } from 'rxjs';
+
 import { Exam } from './exam.model';
 import { Question } from '../question/question.model';
+import { Answer } from '../answer/answer.model';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 
 @Injectable({
@@ -26,19 +29,27 @@ export class ExamService {
 
   // Récupérer un examen avec ses questions par ID
   getExamWithQuestions(examId: number): Observable<Exam> {
-    // D'abord récupérer l'examen
-    const exam$ = this.http.get<Exam>(`${this.apiUrl}/exams/${examId}`);
-    // Ensuite récupérer les questions
-    const questions$ = this.http.get<Question[]>(`${this.apiUrl}/exams/${examId}/questions`);
-    
-    // Combiner les deux appels
+    const exam$ = this.http.get<Exam>(`${this.apiUrl}/exams/${examId}`).pipe(
+      catchError((error: any) => {
+        console.error('Erreur lors de la récupération de l\'examen', error);
+        throw new Error('Impossible de charger les détails de l\'examen');
+      })
+    );
+
+    const questions$ = this.http.get<Question[]>(`${this.apiUrl}/exams/${examId}/questions`).pipe(
+      catchError((error: any) => {
+        console.error('Erreur lors de la récupération des questions', error);
+        return of([] as Question[]); // Typage explicite ici
+      })
+    );
+
     return exam$.pipe(
       switchMap(exam => 
         questions$.pipe(
           map(questions => ({
             ...exam,
-            questions: questions
-          }))
+            questions: questions || []
+          } as Exam)) // Assertion de type ici
         )
       )
     );
@@ -58,28 +69,31 @@ export class ExamService {
   getAllExams(): Observable<Exam[]> {
     return this.http.get<Exam[]>(`${this.apiUrl}/exams`);
   }
-/*zainab code
-  getExam(examLink: string, token: string): Observable<{ exam: ExamData, questions: Question[] }> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get<{ exam: ExamData, questions: Question[] }>(`${this.apiUrl}/exam/${examLink}`, { headers });
+ /* about exam participant 
+ submitAnswer(answer: Answer): Observable<Answer> {
+    return this.http.post<Answer>(
+      `${this.apiUrl}/answers`, 
+      answer, 
+      this.httpOptions
+    );
   }
-
-  getExamByLink(uniqueLink: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/link/${uniqueLink}`);
+ submitMultipleAnswers(answers: Answer[]): Observable<Answer[]> {
+    return this.http.post<Answer[]>(
+      `${this.apiUrl}/answers/batch`, 
+      answers, 
+      this.httpOptions
+    );
   }
-  
-  // Add this method to your ExamService class
-addExam(examData: any): Observable<any> {
-  return this.http.post(`${this.apiUrl}/add-exam`, examData);
+  getParticipantAnswers(participantId: number, examId: number): Observable<Answer[]> {
+    return this.http.get<Answer[]>(
+      `${this.apiUrl}/answers/participant/${participantId}/exam/${examId}`
+    );
+  }
+   hasParticipantSubmitted(participantId: number, examId: number): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${this.apiUrl}/answers/participant/${participantId}/exam/${examId}/exists`
+    );
+  }
 }
-
-  submitExam(examId: string, answers: Answer[], location: any, token: string): Observable<SubmissionResult> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.post<SubmissionResult>(`${this.apiUrl}/submit-exam/${examId}`, { answers, location }, { headers });
-  }*/
+  */
 }

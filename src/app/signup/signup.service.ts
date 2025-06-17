@@ -13,7 +13,7 @@ export class SignupService {
 newcreators=signal<newCreator[]>([])
   constructor(private http: HttpClient) {}
 
-registerCreator(newcreator:newCreator) { //////   i may not need it ////
+registerCreator(newcreator:newCreator) { 
     this.http.post<newCreator>(this.backEndUrl,newcreator).subscribe(nouveauCreator=>{
       this.newcreators.update(state=>[...state,nouveauCreator])
     })

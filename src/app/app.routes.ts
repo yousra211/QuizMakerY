@@ -18,6 +18,8 @@ import { ExamViewComponent } from './exam-view/exam-view.component';
 import { ListComponent } from './creators/list/list.component';
 import { AdminGuard } from './login/admin.guard';
 import { FooterComponent } from './shared/footer/footer.component';
+import { ParticipantComponent } from './participant/participant.component';
+import { ExamParticipantComponent } from './exam-participant/exam-participant.component';
 export const routes: Routes = [
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -27,6 +29,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   // { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
+  {path : 'participant', component: ParticipantComponent},
   {path: "creators",component:CreatorsComponent },
   {path: "exam",component:ExamComponent},
   //{path: '**', redirectTo: 'home' } ,
@@ -35,6 +38,7 @@ export const routes: Routes = [
   {path: "dashboard",component:DashboardComponent},
   {path: "profile",component:ProfileComponent},
   { path: 'exam-view/:id',component: ExamViewComponent},
+  { path: 'exam-participant',component: ExamParticipantComponent},
  { path: 'admin', canActivate: [AdminGuard], children: [{ path: 'creators', component: ListComponent }]},
   { path: 'creator/list', component: ListComponent }
 ];

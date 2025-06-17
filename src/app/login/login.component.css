@@ -66,6 +66,14 @@ color: #202B31;
 border-radius: 17px;
 transition: background-color 0.3s;
 }
+
+
+.form-btn {
+  display: flex;
+  justify-content: center;
+}
+
+
 .btn:hover {
   background-color: #202B31;
   color: white;
