@@ -34,7 +34,8 @@ export class ProfileComponent implements OnInit {
     fullname: '',
     username: '',
     email: '',
-    photoUrl: ''
+    photoUrl: '',
+    roles:''
   };
      
   creator: CreatorResponse = {
@@ -42,7 +43,8 @@ export class ProfileComponent implements OnInit {
     fullname: '',
     username: '',
     email: '',
-    photoUrl: ''
+    photoUrl: '',
+    roles:''
   };
 
   constructor(
@@ -174,7 +176,8 @@ onImageError(event: any): void {
         id: this.creator.id,
         fullname: this.creator.fullname,
         username: this.creator.username,
-        email: this.creator.email
+        email: this.creator.email,
+        roles:this.creator.roles
       };
       
       this.profileService.updateCreatorProfile(creatorToUpdate).subscribe({

@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-
+/*
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> => {
   const router = inject(Router);
   const authToken = localStorage.getItem('basicAuth');
@@ -47,3 +47,4 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
   // Si pas de token, laisser passer la requête telle quelle
   return next(req);
 };
+*/

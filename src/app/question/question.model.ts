@@ -10,4 +10,5 @@ export interface Question {
   grade: number;
   response?: string; // pour stocker la bonne réponse pour une question directe
     options?: string ; // liste de réponses possibles pour QCM
-}
+  toleranceRate?: number;
+  }

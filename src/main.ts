@@ -5,7 +5,7 @@ import { NavbarComponent } from './app/navbar/navbar.component';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from './app/interceptors/auth.interceptor';
+import { jwtInterceptor } from './app/interceptors/jwtInterceptor';
 
 
 const { providers = [], ...restAppConfig } = appConfig;
@@ -14,7 +14,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(
       withInterceptors([
-        authInterceptor
+        jwtInterceptor
       ])
     ),
     ...providers 

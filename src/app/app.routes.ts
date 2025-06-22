@@ -20,6 +20,7 @@ import { AdminGuard } from './login/admin.guard';
 import { FooterComponent } from './shared/footer/footer.component';
 import { ParticipantComponent } from './participant/participant.component';
 import { ExamParticipantComponent } from './exam-participant/exam-participant.component';
+import { AuthGuard } from './guards/auth.guard';
 export const routes: Routes = [
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -35,7 +36,7 @@ export const routes: Routes = [
   //{path: '**', redirectTo: 'home' } ,
   {path: "navbar",component:NavbarComponent},
    {path: 'footer', component: FooterComponent},
-  {path: "dashboard",component:DashboardComponent},
+  {path: "dashboard",component:DashboardComponent,canActivate: [AuthGuard]},
   {path: "profile",component:ProfileComponent},
   { path: 'exam-view/:id',component: ExamViewComponent},
   { path: 'exam-participant',component: ExamParticipantComponent},
