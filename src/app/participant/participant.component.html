@@ -1,7 +1,7 @@
-<div class="form-container">
-  
+ <div class="form-instructions-wrapper">
 
-  <form [formGroup]="participantForm" (ngSubmit)="onSubmit()">
+<div class="form-container">
+    <form [formGroup]="participantForm" (ngSubmit)="onSubmit()">
     <h2>Please fill in the input fields </h2>
 
     
@@ -30,7 +30,25 @@
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Suivant -></button>
     </div>
-
-    
   </form>
+</div>
+
+<div class="instructions-container">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+  <!-- Instructions Section -->
+
+ <div class="instructions-content">
+      <div class="warning-box">
+        <h3> Important Rules - Please Read Carefully</h3>
+        <ul class="rules-list">
+          <li><strong>NO Tab Switching:</strong> Switching tabs or windows Will be detected and may result in quiz termination.</li>
+          <li><strong>NO Copy/Paste:</strong> Copy and paste functions are disabled</li>
+          <li><strong>NO Right-Click:</strong> Right-click context menu is disabled</li>
+          <li><strong>NO External Help:</strong> Do not use external resources or ask for assistance</li>
+          <li><strong>Stay Focused:</strong> Keep this window active throughout the entire quiz</li>
+        </ul>
+      </div>
+
+  </div>
+</div>
 </div>

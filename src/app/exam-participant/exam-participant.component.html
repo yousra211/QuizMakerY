@@ -1,4 +1,12 @@
 <div class="exam-participant-container">
+
+
+<div *ngIf="error() === 'Exam invalidated due to tab switching.'">
+  <h2 class="text-red-600">🚨 Exam Invalidated</h2>
+  <p>You switched tabs during the exam. That’s not allowed.</p>
+</div>
+
+
   <!-- Loading state -->
   @if (loading()) {
     <div class="loading">
@@ -108,9 +116,28 @@
         <button class="btn btn-primary" (click)="submitExam()">
           Send exam
         </button>
-
-        
       </div>
     </div>
   }
+
+</div>
+<!-- Modal pour afficher le score -->
+<div class="modal fade" id="scoreResultModal" tabindex="-1" aria-labelledby="scoreResultModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="scoreResultModalLabel">Résultat de l'examen</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <h3 class="score-display">Votre score total est : {{ finalScore }}</h3>
+          <p class="congratulations-text">Félicitations pour avoir terminé l'examen !</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="closeScoreModal()">Fermer</button>
+      </div>
+    </div>
+  </div>
 </div>

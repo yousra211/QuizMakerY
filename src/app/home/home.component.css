@@ -34,8 +34,8 @@
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(4, 1fr); /* Force exactly 4 columns */
+  gap: 2rem; /* Reduced gap for better fit */
   margin-top: 4rem;
 }
 
@@ -47,6 +47,7 @@
   transition: all 0.3s ease;
   text-align: center;
   border: 1px solid rgba(0, 0, 0, 0.03);
+  min-width: 0; /* Allow cards to shrink if needed */
 }
 
 .feature-card:hover {
@@ -88,23 +89,48 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-  .features {
-      padding: 3rem 0;
-  }
-  
-  .features h2 {
-      font-size: 2rem;
-  }
-  
+@media (max-width: 1200px) {
   .features-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      max-width: 500px;
-      margin: 3rem auto 0;
+    gap: 1.5rem;
   }
   
   .feature-card {
-      padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem;
+  }
+  
+  .feature-card h3 {
+    font-size: 1.2rem;
+  }
+  
+  .feature-card p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2x2 grid on medium screens */
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .features {
+    padding: 3rem 0;
+  }
+  
+  .features h2 {
+    font-size: 2rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: 1.5rem;
+    max-width: 500px;
+    margin: 3rem auto 0;
+  }
+  
+  .feature-card {
+    padding: 2rem 1.5rem;
   }
 }

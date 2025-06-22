@@ -1,30 +1,49 @@
-import { Component, OnInit, OnDestroy, signal, PLATFORM_ID, Inject } from '@angular/core';
+
+import { Component, OnInit, OnDestroy, signal, PLATFORM_ID, Inject, EventEmitter, Output, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { ExamService } from '../exam/exam.service';
 import { AnswerService } from '../answer/answer.service';
 import { Exam } from '../exam/exam.model';
 import { Answer, getQuestionId } from '../answer/answer.model';
 import { Question, QuestionOption } from '../question/question.model';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ParticipantService } from '../participant/participant.service';
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProctoringService } from './proctoring.service';
 
 @Component({
   selector: 'app-exam-participant',
   standalone: true,
-  imports: [],
+imports: [CommonModule , NgIf,FormsModule],
   templateUrl: './exam-participant.component.html',
   styleUrl: './exam-participant.component.css'
 })
 export class ExamParticipantComponent implements OnInit, OnDestroy {
-  
+    @Input() examStarted = false;
+  @Input() autoStartOnExam = true;
+  @Output() examViolation = new EventEmitter<void>();
+
+  tabSwitchCount = 0;
+  maxTabSwitches = 2; // Set maximum allowed tab switches
+  trigger$ = new Subject<void>();
+  isRecording = false;
+
+  initializationError: string | null = null;
+  showWarning = false;
+  warningMessage = '';
+
   // Signals pour l'état du composant
   loading = signal(false);
   error = signal<string | null>(null);
   exam = signal<any>(null);
   questions: any[] = [];
   questionsCount = 0;
+  finalScore: number = 0;
+  
 
   timeLeft = signal<string>('00:00');
   remainingSeconds = 0;
@@ -37,17 +56,24 @@ export class ExamParticipantComponent implements OnInit, OnDestroy {
   String: any;
 
   private readonly EXAM_ID = 25;
+  private hasBeenViolated = false;
 
   constructor(
     private route: ActivatedRoute,
+    private modalService: NgbModal ,
     private router: Router,
     private examService: ExamService,
     private answerService: AnswerService,
     private participantService: ParticipantService,
+    private proctoring: ProctoringService,
       @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
+
+
+
   ngOnInit() {
+  
     // Récupération de l'ID du participant
     const storedId = this.isBrowser() ? localStorage.getItem('currentParticipantId'): null;
     if (storedId) {
@@ -57,17 +83,42 @@ export class ExamParticipantComponent implements OnInit, OnDestroy {
       this.router.navigate(['/participant']);
     }
     
-    this.loadExam();
+        this.loadExam();
+ this.proctoring.examViolated.subscribe(() => {
+  if (!this.hasBeenViolated) {
+    this.hasBeenViolated = true;
+    this.invalidateExam();
+  }
+});
+
+        // Start monitoring
+    this.proctoring.startClipboardMonitoring();
+      this.proctoring.startProctoring();
   }
 
 private isBrowser(): boolean {
   return isPlatformBrowser(this.platformId);
 }
 
+invalidateExam(): void {
+  if (this.timerInterval) clearInterval(this.timerInterval);
+
+  this.participantAnswers.clear();
+  this.error.set('Exam invalidated due to tab switching.');
+
+  setTimeout(() => {
+    alert('⚠️ Tab switching is not allowed. Your exam has been invalidated.');
+    this.router.navigate(['/participant']);
+  }, 100); 
+  this.proctoring.stopProctoring();
+
+}
+
   ngOnDestroy() {
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
     }
+     this.proctoring.stopProctoring() ;
   }
 
   private loadExam() {
@@ -81,19 +132,7 @@ private isBrowser(): boolean {
         console.log('Exam reçu:', exam);
         this.exam.set(exam);
         this.questions = exam.questions || [];
-        
-        // Debug des questions UNE SEULE FOIS
-        console.log('=== QUESTIONS CHARGÉES ===');
-        console.log('Nombre de questions:', this.questions.length);
-        this.questions.forEach((q, index) => {
-          console.log(`Question ${index + 1} (ID: ${q.id}):`, {
-            text: q.text,
-            type: q.type,
-            grade: q.grade,
-            options: q.options
-          });
-        });
-        
+   
         // Initialisation du timer
         this.examDuration = exam.duration * 60;
         this.remainingSeconds = this.examDuration;
@@ -714,22 +753,10 @@ async submitExam() {
       this.participantService.updateParticipantScore(this.participantId, frontendScore)
     );
 
-    console.log(`Score calculé côté frontend: ${frontendScore}`);
-
-    // Statistiques pour la console
-    const correctAnswers = savedAnswers.filter(a => a.isCorrect === true);
-    const incorrectAnswers = savedAnswers.filter(a => a.isCorrect === false);
-    const manualReviewAnswers = savedAnswers.filter(a => a.isCorrect === null);
-
-    console.log('=== RÉSULTATS ===');
-    console.log(`Correctes: ${correctAnswers.length}`);
-    console.log(`Incorrectes: ${incorrectAnswers.length}`);
-    console.log(`À corriger manuellement: ${manualReviewAnswers.length}`);
     console.log(`Score total (frontend): ${frontendScore}`);
 
     // 🎯 AFFICHER LE SCORE CORRECT
-    alert(`Votre score total est : ${frontendScore}`);
-
+this.showScoreModal(frontendScore);
     // Arrêter le timer
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
@@ -737,53 +764,45 @@ async submitExam() {
 
   } catch (error) {
     console.error('Erreur soumission complète:', error);
-
-    // Votre gestion d'erreur existante...
-    if (error instanceof HttpErrorResponse) {
-      console.error('=== DÉTAILS ERREUR HTTP ===');
-      console.error('Status:', error.status);
-      console.error('Status Text:', error.statusText);
-      console.error('URL:', error.url);
-      console.error('Headers:', error.headers);
-      console.error('Error body:', error.error);
-      
-      let errorMessage = 'Erreur lors de l\'enregistrement: ';
-      
-      switch (error.status) {
-        case 0:
-          errorMessage += 'Problème de connexion réseau. Vérifiez votre connexion internet.';
-          break;
-        case 400:
-          errorMessage += 'Données invalides envoyées au serveur.';
-          break;
-        case 401:
-          errorMessage += 'Session expirée. Veuillez vous reconnecter.';
-          break;
-        case 403:
-          errorMessage += 'Accès non autorisé.';
-          break;
-        case 404:
-          errorMessage += 'Service non trouvé.';
-          break;
-        case 500:
-          errorMessage += 'Erreur interne du serveur.';
-          break;
-        case 503:
-          errorMessage += 'Service temporairement indisponible.';
-          break;
-        default:
-          errorMessage += `Erreur HTTP ${error.status}: ${error.statusText}`;
-      }
-      
-      alert(errorMessage);
-    } else {
-      console.error('Erreur non-HTTP:', error);
-      alert('Erreur inattendue lors de l\'enregistrement. Vérifiez la console.');
-    }
-
     this.saveAnswersLocally(answersToSend);
   }
 }
+showScoreModal(score: number) {
+  this.finalScore = score;
+  
+  const modalElement = document.getElementById('scoreResultModal');
+  if (modalElement) {
+    modalElement.classList.add('show');
+    modalElement.style.display = 'block';
+    modalElement.setAttribute('aria-hidden', 'false');
+    
+    // Ajouter backdrop
+    const backdrop = document.createElement('div');
+    backdrop.className = 'modal-backdrop fade show';
+    backdrop.id = 'scoreModalBackdrop';
+    document.body.appendChild(backdrop);
+    
+    document.body.classList.add('modal-open');
+  }
+}
+
+closeScoreModal() {
+  const modalElement = document.getElementById('scoreResultModal');
+  const backdrop = document.getElementById('scoreModalBackdrop');
+  
+  if (modalElement) {
+    modalElement.classList.remove('show');
+    modalElement.style.display = 'none';
+    modalElement.setAttribute('aria-hidden', 'true');
+  }
+  
+  if (backdrop) {
+    backdrop.remove();
+  }
+  
+  document.body.classList.remove('modal-open');
+}
+
 
 // Méthode pour sauvegarder localement en cas d'échec
 private saveAnswersLocally(answers: Answer[]) {

@@ -8,6 +8,38 @@
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
 }
+.warning-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #ff4444;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+      z-index: 1000;
+      animation: flash 0.5s 3;
+    }
+    @keyframes flash {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .exam-content {
+      margin-top: 60px;
+      padding: 20px;
+    }
+    .warning-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #ff4444;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
 
 /* États de chargement et d'erreur */
 .loading {
@@ -510,4 +542,61 @@
   .exam-title {
     margin-bottom: 0.5rem;
   }
+}
+
+/* Styles pour le modal de score */
+::ng-deep .modal-content {
+  background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+::ng-deep .modal-header {
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px 15px 0 0;
+  padding: 1rem 1.5rem;
+}
+
+::ng-deep .modal-title {
+  color: #2e7d32;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+::ng-deep .modal-body {
+  padding: 2rem 1.5rem;
+  color: #333;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+::ng-deep .score-display {
+  color: #1b5e20;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+::ng-deep .congratulations-text {
+  color: #388e3c;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+::ng-deep .modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem 1.5rem;
+  justify-content: center;
+  gap: 1rem;
+}
+
+::ng-deep .modal-footer .btn-primary {
+  background: linear-gradient(45deg, #4caf50, #388e3c);
+  border: none;
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 25px;
+  font-weight: 500;
 }

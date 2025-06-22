@@ -1,14 +1,38 @@
+.form-instructions-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  margin: 50px auto;
+  max-width: 1000px;
+  padding: 0;
+  
+}
+.form-container,
+.instructions-container {
+  flex: 1;
+  padding: 40px;
+  border-radius: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: none;
+  min-width: 350px;
+}
+
+
+
 .form-container {
   max-width: 400px;
   margin: 50px auto;
   padding: 30px;
-
+flex  :1;
 
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 
   background-color:rgba(255, 255, 255, 0.8);
-  border-radius: 17px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  box-shadow: -4px 4px 10px rgba(0, 0, 0, 0.1); /* subtle left shadow */
 
 }
 
@@ -109,4 +133,229 @@ color: white;
 .form-footer a:hover {
   text-decoration: underline;
   color: #202B31;
+}
+/* Instructions Container - Main wrapper */
+.instructions-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+
+  background-color: rgba(255, 255, 255, 0.8);
+ 
+  flex:1;
+    border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Instructions Section */
+.instructions-section {
+  width: 100%;
+  
+}
+
+.instructions-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+
+
+/* Instructions Content */
+.instructions-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Warning Box */
+.warning-box {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid #BBDEF0;
+  border-radius: 17px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.warning-box h3 {
+  color: #f51f07;
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Rules List */
+.rules-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rules-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(187, 222, 240, 0.3);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.rules-list li:last-child {
+  border-bottom: none;
+}
+
+.rules-list li strong {
+  color: #202B31;
+  font-weight: 600;
+}
+
+/* Monitoring Notice */
+.monitoring-notice {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-left: 4px solid #202B31;
+  border-radius: 17px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.monitoring-notice h4 {
+  color: #202B31;
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.monitoring-notice p {
+  color: #333;
+  margin: 10px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.monitoring-notice ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.monitoring-notice ul li {
+  margin: 8px 0;
+  color: #333;
+  font-size: 14px;
+}
+
+.monitoring-notice strong {
+  color: #202B31;
+  font-weight: 600;
+}
+/* Technical Requirements */
+.technical-requirements {
+  background-color: rgba(187, 222, 240, 0.2);
+  border-radius: 17px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.technical-requirements h4 {
+  color: #202B31;
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.technical-requirements ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.technical-requirements ul li {
+  margin: 10px 0;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .instructions-container {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 20px;
+  }
+  
+  .instructions-header h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .warning-box,
+  .monitoring-notice,
+  .technical-requirements {
+    padding: 20px;
+  }
+  
+  .warning-box h3 {
+    font-size: 16px;
+  }
+  
+  .monitoring-notice h4,
+  .technical-requirements h4 {
+    font-size: 14px;
+  }
+  
+  .rules-list li,
+  .monitoring-notice p,
+  .monitoring-notice ul li,
+  .technical-requirements ul li {
+    font-size: 13px;
+  }
+  
+  .instructions-content {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .instructions-container {
+    margin: 10px auto;
+    padding: 15px;
+  }
+  
+  .instructions-header h2 {
+    font-size: 18px;
+  }
+  
+  .warning-box,
+  .monitoring-notice,
+  .technical-requirements {
+    padding: 15px;
+  }
+  
+  .instructions-content {
+    gap: 12px;
+  }
+}
+
+/* Hover Effects */
+.warning-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.monitoring-notice:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.technical-requirements:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+@media (max-width: 900px) {
+  .form-instructions-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
 }
