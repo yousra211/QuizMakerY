@@ -47,25 +47,13 @@ export class ExamViewComponent implements OnInit {
       this.error.set('ID d\'examen manquant');
       this.loading.set(false);
     }
-
-    this.generateUniqueLink();
   }
-
- generateUniqueLink(): void {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    const charactersLength = characters.length;
-    for (let i = 0; i < 10; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    this.uniqueLink = `${window.location.origin}/exam/${result}`;
-  }
-
-  loadExamDetails(examId: number): void {
+ loadExamDetails(examId: number): void {
     this.examService.getExamWithQuestions(examId).subscribe({
       next: (exam: Exam) => {
         this.exam.set(exam);
         this.loading.set(false);
+         this.generateUniqueLink(examId);
       },
       error: (err) => {
         console.error('Erreur lors du chargement de l\'examen:', err);
@@ -74,6 +62,19 @@ export class ExamViewComponent implements OnInit {
       }
     });
   }
+
+ generateUniqueLink(examId: number): void {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < 10; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    this.uniqueLink = `${window.location.origin}/exam/${examId}/${result}`;
+  }
+
+
+ 
 
   // Modifier l'examen
   editExam(): void {

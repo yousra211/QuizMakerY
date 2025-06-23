@@ -55,7 +55,9 @@ export class ExamParticipantComponent implements OnInit, OnDestroy {
   private participantId: number | null = null;
   String: any;
 
-  private readonly EXAM_ID = 25;
+  
+  private examId: number = 0;
+  private token: string = '';
   private hasBeenViolated = false;
 
   constructor(
@@ -74,13 +76,26 @@ export class ExamParticipantComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
   
+        // NOUVEAU : Récupérer examId et token de l'URL
+    this.examId = +this.route.snapshot.params['examId'];
+    this.token = this.route.snapshot.params['token'];
+    
+    console.log('Exam ID:', this.examId, 'Token:', this.token);
+    
+    // Vérifier si les paramètres sont présents
+    if (!this.examId || !this.token) {
+      console.error('Paramètres manquants dans l\'URL');
+      this.error.set('Lien d\'examen invalide');
+      return;
+    }
     // Récupération de l'ID du participant
     const storedId = this.isBrowser() ? localStorage.getItem('currentParticipantId'): null;
     if (storedId) {
       this.participantId = parseInt(storedId, 10);
     } else {
       console.error('Aucun ID participant trouvé dans le localStorage');
-      this.router.navigate(['/participant']);
+     this.router.navigate(['/exam', this.examId, this.token]);
+      return;
     }
     
         this.loadExam();
@@ -125,9 +140,9 @@ invalidateExam(): void {
     this.loading.set(true);
     this.error.set(null);
     
-    const examId = this.EXAM_ID;
+   
 
-    this.examService.getExamWithQuestions(examId).subscribe({
+    this.examService.getExamWithQuestions(this.examId).subscribe({
       next: (exam: Exam) => {
         console.log('Exam reçu:', exam);
         this.exam.set(exam);
@@ -764,7 +779,7 @@ this.showScoreModal(frontendScore);
 
   } catch (error) {
     console.error('Erreur soumission complète:', error);
-    this.saveAnswersLocally(answersToSend);
+    
   }
 }
 showScoreModal(score: number) {
@@ -802,44 +817,6 @@ closeScoreModal() {
   
   document.body.classList.remove('modal-open');
 }
-
-
-// Méthode pour sauvegarder localement en cas d'échec
-private saveAnswersLocally(answers: Answer[]) {
-  try {
-    const localData = {
-      participantId: this.participantId,
-      answers: answers,
-      timestamp: new Date().toISOString(),
-      examId: this.EXAM_ID // si vous avez cette info
-    };
-    
-    localStorage.setItem(`exam_backup_${this.participantId}`, JSON.stringify(localData));
-    console.log('Réponses sauvegardées localement en backup');
-    
-    if (confirm('Vos réponses ont été sauvegardées localement. Voulez-vous réessayer l\'envoi ?')) {
-      // Relancer la soumission après un délai
-      setTimeout(() => this.submitExam(), 2000);
-    }
-  } catch (localError) {
-    console.error('Impossible de sauvegarder localement:', localError);
-  }
-}
-
-// Méthode pour récupérer les réponses sauvegardées localement
-private loadLocalBackup(): any {
-  try {
-    const backupData = localStorage.getItem(`exam_backup_${this.participantId}`);
-    if (backupData) {
-      return JSON.parse(backupData);
-    }
-  } catch (error) {
-    console.error('Erreur lecture backup local:', error);
-  }
-  return null;
-}
-
-
 
   // Vérification des réponses directes avec tolérance
   private checkDirectAnswer(participantAnswer: string, correctAnswer: string, toleranceRate: number = 0): boolean {

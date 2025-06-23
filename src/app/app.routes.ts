@@ -30,22 +30,36 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   // { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
-  {path : 'participant', component: ParticipantComponent},
+  //{path : 'participant', component: ParticipantComponent},
   {path: "creators",component:CreatorsComponent },
   {path: "exam",component:ExamComponent},
   //{path: '**', redirectTo: 'home' } ,
+    {
+    path: 'exam/:examId/:token',
+    component: ParticipantComponent
+  },
+  
+  // Route pour l'examen du participant
+  {
+    path: 'exam-participant/:examId/:token',
+    component: ExamParticipantComponent
+  },
   {path: "navbar",component:NavbarComponent},
    {path: 'footer', component: FooterComponent},
   {path: "dashboard",component:DashboardComponent,canActivate: [AuthGuard]},
   {path: "profile",component:ProfileComponent},
   { path: 'exam-view/:id',component: ExamViewComponent},
-  { path: 'exam-participant',component: ExamParticipantComponent},
+  //{ path: 'exam-participant',component: ExamParticipantComponent},
  { path: 'admin', canActivate: [AdminGuard], children: [{ path: 'creators', component: ListComponent }]},
   { path: 'creator/list', component: ListComponent }
 ];
 @NgModule({
  
     imports: [BrowserModule,
+      RouterModule.forRoot(routes, {
+    useHash: false,  // Important : ne pas utiliser le hash routing
+    enableTracing: false
+  }),
         ReactiveFormsModule,RouterModule.forRoot(routes)
        ],
     exports: [RouterModule]
